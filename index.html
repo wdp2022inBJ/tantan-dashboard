@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>碳碳の每日驾驶舱 🚀</title>
+<style>
+/* ===== CSS RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  background: #FAFAF8;
+  color: #2D2D2D;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --coral: #FF6B6B;
+  --coral-light: #FF8E8E;
+  --coral-soft: #FFF0F0;
+  --teal: #4ECDC4;
+  --teal-light: #7EDDD6;
+  --teal-soft: #F0FAFA;
+  --bg: #FAFAF8;
+  --card: #FFFFFF;
+  --text: #2D2D2D;
+  --text-muted: #888888;
+  --text-light: #BBBBBB;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.13);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --border: #F0EEE8;
+  --gold: #FFB347;
+  --purple: #9B59B6;
+  --red: #E74C3C;
+  --green: #2ECC71;
+  --green-soft: #EAFAF1;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #DDD; border-radius: 2px; }
+
+/* ===== HEADER ===== */
+.app-header {
+  background: linear-gradient(135deg, var(--coral) 0%, #FF8E53 100%);
+  padding: 16px 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(255,107,107,0.3);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.app-title {
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.header-date {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.8rem;
+  text-align: right;
+}
+.header-date strong {
+  display: block;
+  font-size: 0.95rem;
+  color: white;
+}
+
+/* ===== TABS ===== */
+.tab-nav {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto;
+  background: rgba(255,255,255,0.18);
+  border: none;
+  color: rgba(255,255,255,0.75);
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  user-select: none;
+  font-weight: 500;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.28); color: white; }
+.tab-btn.active {
+  background: var(--bg);
+  color: var(--coral);
+  font-weight: 700;
+}
+
+/* ===== MAIN CONTENT ===== */
+.tab-content { display: none; padding: 20px; max-width: 720px; margin: 0 auto; }
+.tab-content.active { display: block; animation: fadeInUp 0.25s ease; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-title .emoji { font-size: 1rem; }
+
+/* ===== TODAY TASK CARD ===== */
+.today-main-card {
+  background: linear-gradient(135deg, #FFF5F5, #FFF9F0);
+  border: 2px solid var(--coral-light);
+}
+.today-weekday {
+  font-size: 0.75rem;
+  color: var(--coral);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.today-task-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.today-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.meta-chip {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.meta-chip.trigger { border-color: var(--teal-light); color: var(--teal); background: var(--teal-soft); }
+.meta-chip.time { border-color: var(--gold); color: #CC8800; background: #FFFBF0; }
+
+/* ===== CHECKBOX ===== */
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+  min-height: 52px;
+}
+.check-item:hover { background: #F8F8F6; }
+.check-item.done { background: var(--green-soft); }
+.check-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 2.5px solid #DDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: white;
+}
+.check-item.done .check-box {
+  background: var(--green);
+  border-color: var(--green);
+  transform: scale(1.1);
+}
+.check-box svg { display: none; }
+.check-item.done .check-box svg { display: block; }
+.check-label { font-size: 0.95rem; color: var(--text); flex: 1; line-height: 1.4; }
+.check-item.done .check-label { color: var(--text-muted); text-decoration: line-through; }
+.check-sublabel { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+
+/* ===== THE MAIN CHECKBOX ===== */
+.big-check-wrapper {
+  text-align: center;
+  padding: 10px 0;
+}
+.big-check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border-radius: 50px;
+  border: 2.5px solid var(--coral);
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--coral);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(255,107,107,0.2);
+}
+.big-check-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(255,107,107,0.3);
+}
+.big-check-btn.completed {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(46,204,113,0.4);
+  animation: celebratePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes celebratePop {
+  0% { transform: scale(0.95); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1.05); }
+}
+
+/* ===== TIMER ===== */
+.timer-card { text-align: center; }
+.timer-display {
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  letter-spacing: 2px;
+  margin: 10px 0;
+  transition: color 0.3s;
+}
+.timer-display.running { color: var(--coral); }
+.timer-display.done-state { color: var(--green); }
+.timer-controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.btn-primary { background: var(--coral); color: white; box-shadow: 0 2px 8px rgba(255,107,107,0.3); }
+.btn-primary:hover { background: var(--coral-light); transform: translateY(-1px); }
+.btn-secondary { background: var(--teal); color: white; box-shadow: 0 2px 8px rgba(78,205,196,0.3); }
+.btn-secondary:hover { background: var(--teal-light); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+.btn-ghost:hover { background: #F5F5F3; }
+.btn-mini { padding: 6px 14px; font-size: 0.8rem; }
+.timer-preset-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
+.timer-presets { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.preset-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-muted);
+  user-select: none;
+}
+.preset-btn:hover, .preset-btn.selected { border-color: var(--coral); color: var(--coral); background: var(--coral-soft); }
+
+/* ===== EVENING ANCHOR ===== */
+.anchor-input-wrap { position: relative; }
+.anchor-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: none;
+  height: 80px;
+  background: #FAFAF8;
+  transition: border-color 0.2s;
+  color: var(--text);
+}
+.anchor-textarea:focus { outline: none; border-color: var(--teal); }
+.anchor-textarea::placeholder { color: var(--text-light); }
+.anchor-saved {
+  background: var(--teal-soft);
+  border: 1.5px solid var(--teal-light);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 50px;
+}
+.anchor-saved-label { font-size: 0.75rem; color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+
+/* ===== RED LINES ===== */
+.redlines-grid { display: flex; flex-direction: column; gap: 4px; }
+.redline-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: #FFF9F9;
+  border-left: 3px solid var(--coral);
+}
+.redline-item.no-task { background: #F8F8F8; border-left-color: var(--border); }
+.redline-type { font-size: 0.75rem; font-weight: 700; color: var(--coral); min-width: 52px; }
+.redline-item.no-task .redline-type { color: var(--text-light); }
+.redline-desc { font-size: 0.88rem; color: var(--text); flex: 1; }
+.redline-item.no-task .redline-desc { color: var(--text-light); }
+
+/* ===== 21-DAY TRACKER ===== */
+.week-header {
+  background: linear-gradient(135deg, var(--coral) 0%, #FF8E53 100%);
+  color: white;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+.week-block { margin-bottom: 16px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.week-block:nth-child(2) .week-header { background: linear-gradient(135deg, var(--teal) 0%, #45B7B0 100%); }
+.week-block:nth-child(3) .week-header { background: linear-gradient(135deg, var(--purple) 0%, #8E44AD 100%); }
+.day-row {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.day-row:last-child { border-bottom: none; }
+.day-row.rest-day {
+  background: #FAFAF8;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.day-row.today-row { background: #FFF8F8; }
+.day-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  min-width: 36px;
+  color: var(--text-muted);
+}
+.day-date {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  min-width: 48px;
+}
+.day-label.today-label { color: var(--coral); }
+.tracker-checks { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
+.mini-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 8px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: white;
+  transition: all 0.15s;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.mini-check:hover { border-color: var(--coral); color: var(--coral); }
+.mini-check.checked {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  animation: microPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes microPop {
+  0% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+.mini-check-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.mini-check.checked .mini-check-box { background: rgba(255,255,255,0.3); border-color: white; }
+.rest-text { color: var(--text-light); font-size: 0.85rem; padding: 4px 0; }
+.day-row.completed-day { background: linear-gradient(90deg, #EAFAF1, white); }
+
+/* ===== STATS ===== */
+.stats-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-card {
+  flex: 1;
+  min-width: 80px;
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.stat-number { font-size: 1.8rem; font-weight: 800; color: var(--coral); }
+.stat-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+.progress-bar-wrap { background: var(--border); border-radius: 10px; height: 8px; overflow: hidden; margin: 6px 0; }
+.progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--coral), var(--gold)); transition: width 0.6s ease; }
+.progress-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); }
+
+/* ===== DATE PICKER ===== */
+.start-date-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--teal-soft);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.start-date-wrap label { font-size: 0.85rem; color: var(--text-muted); flex: 1; }
+.date-input {
+  border: 1.5px solid var(--teal-light);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: white;
+  cursor: pointer;
+}
+.date-input:focus { outline: none; border-color: var(--teal); }
+
+/* ===== LIFE MAP ===== */
+.project-card {
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 12px;
+  background: white;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--coral);
+}
+.project-card:nth-child(2) { border-left-color: var(--teal); }
+.project-card:nth-child(3) { border-left-color: var(--gold); }
+.project-card:nth-child(4) { border-left-color: var(--purple); }
+.project-card:nth-child(5) { border-left-color: #E67E22; }
+.project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+.project-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+.project-priority { font-size: 0.85rem; }
+.project-phase { font-size: 0.8rem; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
+.project-target { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 12px 0 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.timeline::-webkit-scrollbar { display: none; }
+.tl-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+  position: relative;
+}
+.tl-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid var(--border);
+  z-index: 1;
+  transition: all 0.3s;
+}
+.tl-dot.current {
+  background: var(--coral);
+  border-color: var(--coral);
+  box-shadow: 0 0 0 4px rgba(255,107,107,0.2);
+  width: 16px;
+  height: 16px;
+}
+.tl-dot.done { background: var(--green); border-color: var(--green); }
+.tl-line {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.tl-item:last-child .tl-line { display: none; }
+.tl-label { font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 6px; max-width: 70px; line-height: 1.3; }
+.tl-label.current-label { color: var(--coral); font-weight: 700; }
+.you-are-here {
+  font-size: 0.7rem;
+  color: var(--coral);
+  font-weight: 700;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.time-budget-bar {
+  display: flex;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  height: 32px;
+  margin: 12px 0;
+}
+.budget-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: flex 0.5s ease;
+}
+.budget-seg.sleep { background: #7B8CDE; flex: 56; }
+.budget-seg.misc { background: #A8B2CC; flex: 40; }
+.budget-seg.kids { background: #F9A8D4; flex: 40; }
+.budget-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.budget-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+.budget-legend-item { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; }
+.free-breakdown {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--teal-soft);
+  border-radius: var(--radius-sm);
+}
+.free-breakdown-title { font-size: 0.8rem; color: var(--teal); font-weight: 700; margin-bottom: 8px; }
+.free-bar {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 24px;
+  margin-bottom: 8px;
+}
+.free-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
+}
+.calming-box {
+  background: linear-gradient(135deg, #FFF9F5, #F5FFF9);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 4px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  text-align: center;
+  font-style: italic;
+}
+.calming-box::before { content: "💚 "; font-style: normal; }
+
+/* ===== EMERGENCY ===== */
+.emergency-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: none;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  user-select: none;
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+.emergency-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.emergency-btn .btn-emoji { font-size: 1.5rem; }
+.emergency-btn .btn-arrow {
+  margin-left: auto;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+.emergency-btn.open .btn-arrow { transform: rotate(90deg); }
+.emergency-btn.no-motivation { background: linear-gradient(135deg, #FF8C42, #FF6B35); color: white; }
+.emergency-btn.burnout { background: linear-gradient(135deg, var(--red), #C0392B); color: white; }
+.emergency-btn.stuck { background: linear-gradient(135deg, var(--purple), #7D3C98); color: white; }
+.emergency-panel {
+  display: none;
+  background: white;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 18px;
+  margin-top: -8px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-top: none;
+  animation: slideDown 0.2s ease;
+}
+.emergency-panel.open { display: block; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.emergency-rule { font-size: 0.95rem; color: var(--text); line-height: 1.8; margin-bottom: 12px; }
+.emergency-rule .highlight { font-weight: 700; color: var(--coral); }
+.shrink-chain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+  padding: 12px;
+  background: #FFF5F5;
+  border-radius: var(--radius-sm);
+}
+.shrink-item {
+  background: white;
+  border: 1.5px solid var(--coral-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--coral);
+  text-align: center;
+}
+.shrink-arrow { color: var(--text-light); font-size: 1.2rem; }
+.protocol-list { list-style: none; }
+.protocol-list li {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.protocol-list li.no { background: #FFF5F5; color: var(--red); }
+.protocol-list li.yes { background: var(--green-soft); color: #1A9E55; }
+.protocol-list li.no::before { content: "❌ "; }
+.protocol-list li.yes::before { content: "✅ "; }
+.quote-box {
+  background: linear-gradient(135deg, #F8F5FF, #FFF5F8);
+  border-left: 4px solid var(--purple);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
+}
+.quote-box strong { font-style: normal; color: var(--purple); display: block; font-size: 0.78rem; margin-bottom: 4px; }
+.mini-timer-display {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #FF6B35;
+  text-align: center;
+  margin: 8px 0;
+}
+.mini-timer-display.done-state { color: var(--green); }
+
+/* ===== CAPTURE BOX ===== */
+.capture-textarea {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: none;
+  height: 100px;
+  background: white;
+  transition: border-color 0.2s;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.capture-textarea:focus { outline: none; border-color: var(--teal); }
+.capture-textarea::placeholder { color: var(--text-light); }
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.tag-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-muted);
+  user-select: none;
+}
+.tag-btn:hover, .tag-btn.selected { border-color: var(--teal); color: var(--teal); background: var(--teal-soft); }
+.capture-list { margin-top: 16px; }
+.capture-item {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  transition: background 0.2s;
+}
+.capture-item.exported { background: #FAFAFA; opacity: 0.65; }
+.capture-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border-radius: 4px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.capture-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; flex: 1; }
+.capture-time { font-size: 0.72rem; color: var(--text-light); white-space: nowrap; margin-top: 3px; }
+.capture-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  font-size: 1rem;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.capture-del:hover { color: var(--red); }
+.return-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  color: var(--teal);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  user-select: none;
+}
+.capture-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #2D2D2D;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9990;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  border-radius: 2px;
+  animation: confettiFall 2.5s ease-in forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== MISC UTILS ===== */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+.text-muted { color: var(--text-muted); }
+.text-small { font-size: 0.8rem; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.flex-row { display: flex; align-items: center; gap: 8px; }
+.flex-1 { flex: 1; }
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.badge-coral { background: var(--coral-soft); color: var(--coral); }
+.badge-teal { background: var(--teal-soft); color: var(--teal); }
+.badge-green { background: var(--green-soft); color: #1A9E55; }
+.special-day-notice {
+  text-align: center;
+  padding: 28px 20px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+.special-day-notice .big-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
+.restart-card {
+  background: linear-gradient(135deg, #FFF9F5, #F5F5FF);
+  border: 1.5px solid var(--purple);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+.streak-fire { font-size: 1.2rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .tab-btn { padding: 8px 10px; font-size: 0.72rem; }
+  .timer-display { font-size: 2.8rem; }
+  .tracker-checks { justify-content: flex-start; }
+  .mini-check { font-size: 0.68rem; padding: 3px 7px; }
+  .day-row { gap: 6px; }
+}
+
+/* ===== GLOW EFFECT for completed day ===== */
+@keyframes dayGlow {
+  0% { box-shadow: 0 0 0 0 rgba(46,204,113,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+}
+.day-glow { animation: dayGlow 1s ease; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-top">
+    <div class="app-title">🚀 碳碳の每日驾驶舱</div>
+    <div class="header-date">
+      <strong id="headerDate">—</strong>
+      <span id="headerWeekday">—</span>
+    </div>
+  </div>
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('launch')" id="tab-launch">🎯 今日启动</button>
+    <button class="tab-btn" onclick="switchTab('tracker')" id="tab-tracker">📊 21天追踪</button>
+    <button class="tab-btn" onclick="switchTab('lifemap')" id="tab-lifemap">🗺️ 人生全景</button>
+    <button class="tab-btn" onclick="switchTab('emergency')" id="tab-emergency">🆘 急救站</button>
+    <button class="tab-btn" onclick="switchTab('capture')" id="tab-capture">📝 捕获箱</button>
+  </nav>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+<!-- CONFETTI CONTAINER -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ======================== TAB 1: 今日启动 ======================== -->
+<div class="tab-content active" id="content-launch">
+
+  <!-- 今日任务 -->
+  <div class="card today-main-card" id="todayTaskCard">
+    <div class="today-weekday" id="todayWeekdayLabel">—</div>
+    <div class="today-task-text" id="todayTaskText">载入中...</div>
+    <div class="today-meta" id="todayMeta"></div>
+    <div class="divider"></div>
+    <!-- 那一件事完成了 -->
+    <div class="big-check-wrapper">
+      <button class="big-check-btn" id="mainCheckBtn" onclick="toggleMainCheck()">
+        <span id="mainCheckIcon">○</span>
+        <span id="mainCheckLabel">那一件事完成了 ✅</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 今日红线 -->
+  <div class="card">
+    <div class="card-title"><span class="emoji">🔴</span> 今日红线（守住就赢）</div>
+    <div class="redlines-grid" id="redlinesGrid"></div>
+  </div>
+
+  <!-- 番茄钟 -->
+  <div class="card timer-card">
+    <div class="card-title"><span class="emoji">⏱️</span> 专注计时器</div>
+    <div class="timer-preset-label">选择时长</div>
+    <div class="timer-presets">
+      <button class="preset-btn selected" data-mins="25" onclick="selectPreset(this, 25)">25分钟</button>
+      <button class="preset-btn" data-mins="15" onclick="selectPreset(this, 15)">15分钟</button>
+      <button class="preset-btn" data-mins="30" onclick="selectPreset(this, 30)">30分钟</button>
+      <button class="preset-btn" data-mins="5" onclick="selectPreset(this, 5)">5分钟</button>
+      <button class="preset-btn" data-mins="2" onclick="selectPreset(this, 2)">2分钟</button>
+    </div>
+    <div class="timer-display" id="timerDisplay">25:00</div>
+    <div class="timer-controls">
+      <button class="btn btn-primary" id="timerStartBtn" onclick="timerToggle()">▶ 开始</button>
+      <button class="btn btn-ghost" onclick="timerReset()">↺ 重置</button>
+    </div>
+  </div>
+
+  <!-- 晚间锚点 -->
+  <div class="card">
+    <div class="card-title"><span class="emoji">⚓</span> 今日锚点（睡前一句话）</div>
+    <div id="anchorSavedDisplay" style="display:none">
+      <div class="anchor-saved-label">✅ 今日锚点已记录</div>
+      <div class="anchor-saved" id="anchorSavedText"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-mini" onclick="editAnchor()">修改</button>
+      </div>
+    </div>
+    <div id="anchorInputDisplay">
+      <textarea class="anchor-textarea" id="anchorTextarea" placeholder="今天最重要的一件事是... / 今天我学到了... / 明天我想先做..."></textarea>
+      <div style="text-align:right;margin-top:8px;">
+        <button class="btn btn-secondary" onclick="saveAnchor()">保存锚点 💾</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================== TAB 2: 21天追踪 ======================== -->
+<div class="tab-content" id="content-tracker">
+
+  <div class="start-date-wrap">
+    <label>📅 21天挑战开始日期</label>
+    <input type="date" class="date-input" id="startDateInput" onchange="onStartDateChange()">
+  </div>
+
+  <!-- 统计 -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number" id="statRate">0%</div>
+      <div class="stat-label">总完成率</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statStreak">0<span class="streak-fire">🔥</span></div>
+      <div class="stat-label">当前连续天</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statDaysDone">0</div>
+      <div class="stat-label">已完成天数</div>
+    </div>
+  </div>
+
+  <!-- 周进度条 -->
+  <div class="card" style="padding:14px 16px;">
+    <div class="mb-8">
+      <div class="progress-label"><span>🚀 启动周</span><span id="w1pct">0%</span></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="w1bar" style="width:0%"></div></div>
+    </div>
+    <div class="mb-8">
+      <div class="progress-label"><span>📋 复制周</span><span id="w2pct">0%</span></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="w2bar" style="width:0%;background:linear-gradient(90deg,var(--teal),#45B7B0)"></div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>🌊 心流周</span><span id="w3pct">0%</span></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="w3bar" style="width:0%;background:linear-gradient(90deg,var(--purple),#8E44AD)"></div></div>
+    </div>
+  </div>
+
+  <!-- 21天网格 -->
+  <div id="trackerGrid"></div>
+
+</div>
+
+<!-- ======================== TAB 3: 人生全景 ======================== -->
+<div class="tab-content" id="content-lifemap">
+
+  <div style="text-align:center;padding:16px 0 8px;">
+    <div style="font-size:1.15rem;font-weight:800;color:var(--text);">你在这里 📍</div>
+    <div style="font-size:0.85rem;color:var(--text-muted);margin-top:4px;">看看就好，不用焦虑</div>
+  </div>
+
+  <!-- 项目卡片 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">🎯 主攻：副业变现</div>
+        <div class="project-phase">当前阶段：起号期（第1-3个月）</div>
+      </div>
+      <div class="project-priority">⭐⭐⭐⭐⭐</div>
+    </div>
+    <div class="project-target">🎯 下一里程碑：连续21天发帖</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label current-label">起号期<br>📍YOU ARE HERE</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">涨粉期</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">产品化</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">被动收入</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">🏃 红线：身体管理</div>
+        <div class="project-phase">当前阶段：习惯建立期</div>
+      </div>
+      <div class="project-priority">⭐⭐⭐⭐</div>
+    </div>
+    <div class="project-target">🎯 目标：每周运动3次</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label current-label">贴身运动<br>📍HERE</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">规律运动</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">体能提升</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">👶 红线：育儿发展</div>
+        <div class="project-phase">当前阶段：扁平足训练</div>
+      </div>
+      <div class="project-priority">⭐⭐⭐⭐</div>
+    </div>
+    <div class="project-target">🎯 目标：每周2次训练</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label current-label">训练习惯<br>📍HERE</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">改善效果</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">自主维护</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">🧠 红线：操作系统</div>
+        <div class="project-phase">当前阶段：知识库整理</div>
+      </div>
+      <div class="project-priority">⭐⭐⭐</div>
+    </div>
+    <div class="project-target">🎯 目标：每日15min维护</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label current-label">收集<br>📍HERE</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">整理</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">输出</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">迭代</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">📚 红线：持续学习</div>
+        <div class="project-phase">当前阶段：播客听学</div>
+      </div>
+      <div class="project-priority">⭐⭐⭐</div>
+    </div>
+    <div class="project-target">🎯 目标：每日15min</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label current-label">输入<br>📍HERE</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">吸收</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">输出</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-label">变现</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 时间预算 -->
+  <div class="card">
+    <div class="card-title"><span class="emoji">⏰</span> 每周168小时分配</div>
+    <div class="time-budget-bar">
+      <div class="budget-seg sleep" title="睡眠56h">睡眠56h</div>
+      <div class="budget-seg misc" title="通勤杂务40h">杂务40h</div>
+      <div class="budget-seg kids" title="育儿陪伴40h" style="color:#333">育儿40h</div>
+    </div>
+    <div class="budget-legend">
+      <div class="budget-legend-item"><span class="budget-dot" style="background:#7B8CDE"></span>睡眠 56h</div>
+      <div class="budget-legend-item"><span class="budget-dot" style="background:#A8B2CC"></span>通勤杂务 40h</div>
+      <div class="budget-legend-item"><span class="budget-dot" style="background:#F9A8D4"></span>育儿陪伴 40h</div>
+      <div class="budget-legend-item"><span class="budget-dot" style="background:var(--teal)"></span>自由时间 32h ✨</div>
+    </div>
+    <div class="free-breakdown">
+      <div class="free-breakdown-title">🎉 32小时自由时间这样用</div>
+      <div class="free-bar">
+        <div class="free-seg" style="flex:12;background:var(--coral)" title="副业12h">副业</div>
+        <div class="free-seg" style="flex:5;background:var(--teal)" title="身体5h">身体</div>
+        <div class="free-seg" style="flex:3;background:var(--gold);color:#333" title="育儿专项3h">育儿</div>
+        <div class="free-seg" style="flex:3;background:#9B59B6" title="学习3h">学习</div>
+        <div class="free-seg" style="flex:2;background:#E67E22" title="操作系统2h">系统</div>
+        <div class="free-seg" style="flex:7;background:#BDC3C7;color:#333" title="留白7h">留白</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+        <span class="badge badge-coral">副业 12h</span>
+        <span class="badge badge-teal">身体 5h</span>
+        <span style="padding:2px 8px;border-radius:20px;font-size:0.72rem;font-weight:700;background:#FFF9E0;color:#CC8800;">学习 3h</span>
+        <span style="padding:2px 8px;border-radius:20px;font-size:0.72rem;font-weight:700;background:#F5EEFF;color:var(--purple);">育儿专项 3h</span>
+        <span style="padding:2px 8px;border-radius:20px;font-size:0.72rem;font-weight:700;background:#FFF0E8;color:#E67E22;">操作系统 2h</span>
+        <span style="padding:2px 8px;border-radius:20px;font-size:0.72rem;font-weight:700;background:#F5F5F5;color:var(--text-muted);">留白 7h 🌿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 安慰话 -->
+  <div class="calming-box">
+    所有项目都在轨道上。你不需要同时推进所有事情。每天只做「那一件事」+ 守住红线，时间会帮你完成剩下的。
+  </div>
+
+</div>
+
+<!-- ======================== TAB 4: 急救站 ======================== -->
+<div class="tab-content" id="content-emergency">
+
+  <div style="text-align:center;padding:8px 0 16px;font-size:0.88rem;color:var(--text-muted);">
+    感觉不对劲？选一个场景 👇
+  </div>
+
+  <!-- 按钮1：没动力 -->
+  <button class="emergency-btn no-motivation" id="emgBtn1" onclick="toggleEmergency(1)">
+    <span class="btn-emoji">😶</span>
+    <div>
+      <div>没动力</div>
+      <div style="font-size:0.75rem;opacity:0.85;font-weight:400;">2分钟法则</div>
+    </div>
+    <span class="btn-arrow">›</span>
+  </button>
+  <div class="emergency-panel" id="emgPanel1">
+    <div class="emergency-rule">
+      念出来：<span class="highlight">「我只做2分钟，2分钟后想停就停。」</span>
+    </div>
+    <div class="emergency-rule">
+      👉 打开电脑/手机/笔记本，开始做2分钟。
+    </div>
+    <div class="emergency-rule">
+      99%你会自然做下去。<br>1%做完2分钟停了——<strong>也算赢</strong>。
+    </div>
+    <div style="text-align:center;margin-top:12px;">
+      <div class="mini-timer-display" id="miniTimerDisplay">2:00</div>
+      <button class="btn btn-primary" id="miniTimerBtn" onclick="miniTimerToggle()">▶ 启动2分钟</button>
+    </div>
+  </div>
+
+  <!-- 按钮2：要崩了 -->
+  <button class="emergency-btn burnout" id="emgBtn2" onclick="toggleEmergency(2)">
+    <span class="btn-emoji">💥</span>
+    <div>
+      <div>要崩了</div>
+      <div style="font-size:0.75rem;opacity:0.85;font-weight:400;">极限缩小法</div>
+    </div>
+    <span class="btn-arrow">›</span>
+  </button>
+  <div class="emergency-panel" id="emgPanel2">
+    <div class="emergency-rule">任务太难？<strong>一直缩小，直到不怕为止。</strong></div>
+    <div class="shrink-chain">
+      <div class="shrink-item">原目标<br>写1条笔记</div>
+      <div class="shrink-arrow">→</div>
+      <div class="shrink-item">缩小<br>打开App</div>
+      <div class="shrink-arrow">→</div>
+      <div class="shrink-item" style="background:linear-gradient(135deg,#FFF5F5,#FFE8E8);">再缩<br>打开手机</div>
+    </div>
+    <div class="emergency-rule" style="margin-top:10px;">
+      完成「打开手机」也算<strong>今日完成</strong>。<br>
+      不要内疚。明天再说。
+    </div>
+  </div>
+
+  <!-- 按钮3：3天没动了 -->
+  <button class="emergency-btn stuck" id="emgBtn3" onclick="toggleEmergency(3)">
+    <span class="btn-emoji">🕳️</span>
+    <div>
+      <div>3天没动了</div>
+      <div style="font-size:0.75rem;opacity:0.85;font-weight:400;">最小重启协议</div>
+    </div>
+    <span class="btn-arrow">›</span>
+  </button>
+  <div class="emergency-panel" id="emgPanel3">
+    <ul class="protocol-list">
+      <li class="no">不要打开后台看数据（看了更焦虑）</li>
+      <li class="no">不要重新规划（规划=逃避执行）</li>
+      <li class="yes">直接做明天的那一件事，哪怕缩到极致版</li>
+    </ul>
+    <div class="emergency-rule" style="margin-top:12px;padding:10px;background:#F5EEFF;border-radius:var(--radius-sm);color:var(--purple);font-weight:600;">
+      连续掉链子不是失败。<br>连续不重启才是失败。
+    </div>
+  </div>
+
+  <div style="margin-top:20px;">
+    <div class="card-title" style="margin-bottom:12px;"><span class="emoji">💌</span> 给自己的提醒</div>
+    <div class="quote-box">
+      <strong>给发射前的自己</strong>
+      你不是在摆烂，你是在「发射前的倒计时」。倒计时看起来什么都没发生，但所有系统都在校准。
+    </div>
+    <div class="quote-box">
+      <strong>关于ADHD超级模式</strong>
+      ADHD大脑的最大优势是「超级专注模式」——当你跑顺了第3周开始，你会突然进入心流。撑到第3周。
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================== TAB 5: 捕获箱 ======================== -->
+<div class="tab-content" id="content-capture">
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📝</span> 快速捕获</div>
+    <textarea class="capture-textarea" id="captureInput" placeholder="分心了？先写在这里，然后回去干活..." rows="4"></textarea>
+    <div class="tag-row" id="tagRow">
+      <button class="tag-btn selected" data-tag="灵感" onclick="selectTag(this)">#灵感</button>
+      <button class="tag-btn" data-tag="待办" onclick="selectTag(this)">#待办</button>
+      <button class="tag-btn" data-tag="想法" onclick="selectTag(this)">#想法</button>
+      <button class="tag-btn" data-tag="焦虑" onclick="selectTag(this)">#焦虑</button>
+      <button class="tag-btn" data-tag="其他" onclick="selectTag(this)">#其他</button>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="saveCapture()">✚ 保存捕获</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <div class="card-title" style="margin-bottom:0;"><span class="emoji">📋</span> 今日捕获</div>
+      <div class="capture-actions">
+        <button class="btn btn-ghost btn-mini" onclick="exportCaptures()">📋 导出到剪贴板</button>
+        <button class="btn btn-ghost btn-mini" onclick="clearExported()">🗑 清空已导出</button>
+      </div>
+    </div>
+    <div class="capture-list" id="captureList">
+      <div style="text-align:center;padding:20px;color:var(--text-light);font-size:0.88rem;">今天还没有捕获 — 专注很棒！</div>
+    </div>
+  </div>
+
+  <a class="return-link" onclick="switchTab('launch')">写完了？回到「今日启动」继续干 →</a>
+
+</div>
+
+<script>
+// ===================================================================
+// CONSTANTS & SCHEDULE DATA
+// ===================================================================
+const WEEKDAY_NAMES = ['周日','周一','周二','周三','周四','周五','周六'];
+const WEEKDAY_NAMES_FULL = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+const MONTH_NAMES = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+const WEEKLY_SCHEDULE = {
+  1: { // 周一
+    emoji: '🎯',
+    task: '写1条小红书引流笔记',
+    trigger: '送娃→咖啡馆→开电脑',
+    time: '25+5min',
+    special: false
+  },
+  2: { // 周二
+    emoji: '📤',
+    task: '发1条预存稿 + 回复10条评论',
+    trigger: '7点闹钟→床上拿手机',
+    time: '15min',
+    special: false
+  },
+  3: { // 周三
+    emoji: '💡',
+    task: '跟Claude拆解一个新选题',
+    trigger: '娃午睡→关门→开Claude',
+    time: '30min',
+    special: false
+  },
+  4: { // 周四
+    emoji: '✍️',
+    task: '根据周三选题写新笔记',
+    trigger: '送娃→工作区',
+    time: '25+5min',
+    special: false
+  },
+  5: { // 周五
+    emoji: '🔍',
+    task: '30分钟周复盘',
+    trigger: '晚饭后→老公洗碗→拿笔记本',
+    time: '30min',
+    special: false
+  },
+  6: { // 周六
+    emoji: '❌',
+    task: '强制留白（追剧/约朋友/陪娃）',
+    trigger: null,
+    time: null,
+    special: 'rest'
+  },
+  0: { // 周日
+    emoji: '🔄',
+    task: '21:00 重启仪式（15min纸笔复盘）',
+    trigger: null,
+    time: '15min',
+    special: 'restart'
+  }
+};
+
+// 红线 by weekday
+const REDLINES = {
+  body: {
+    1: '走路回家 15min',
+    3: '跟跳操 15min',
+    5: '散步 30min'
+  },
+  parenting: {
+    2: '踮脚刷牙 3min',
+    4: '抓毛巾 3min'
+  },
+  study: {
+    1: '接娃路上听播客 15min',
+    2: '接娃路上听播客 15min',
+    3: '接娃路上听播客 15min',
+    4: '接娃路上听播客 15min',
+    5: '接娃路上听播客 15min'
+  }
+};
+
+const STORAGE_KEYS = {
+  startDate: 'tantan_tracker_startDate',
+  trackerData: 'tantan_tracker_data',
+  anchors: 'tantan_anchors',
+  captures: 'tantan_captures',
+  timerState: 'tantan_timer_state'
+};
+
+// ===================================================================
+// UTILITY FUNCTIONS
+// ===================================================================
+function dateStr(d) {
+  if (!d) d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function parseDateStr(str) {
+  const [y,m,d] = str.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  return dt;
+}
+
+function addDays(d, n) {
+  const r = new Date(d);
+  r.setDate(r.getDate() + n);
+  return r;
+}
+
+function getStorage(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    if (v === null) return fallback;
+    return JSON.parse(v);
+  } catch(e) { return fallback; }
+}
+
+function setStorage(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){}
+}
+
+function getTodayWday() {
+  return new Date().getDay(); // 0=Sun, 1=Mon...6=Sat
+}
+
+function showToast(msg, duration=2000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function svgCheck() {
+  return `<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function miniSvgCheck() {
+  return `<svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+    <path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+// ===================================================================
+// AUDIO: Web Audio API beep
+// ===================================================================
+function playBeep(type='done') {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    if (type === 'done') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime); // C5
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.15); // E5
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.30); // G5
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+    } else {
+      osc.frequency.setValueAtTime(440, ctx.currentTime);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    }
+  } catch(e) {}
+}
+
+// ===================================================================
+// CONFETTI
+// ===================================================================
+function launchConfetti(count=30) {
+  const container = document.getElementById('confettiContainer');
+  container.innerHTML = '';
+  const colors = ['#FF6B6B','#4ECDC4','#FFB347','#9B59B6','#2ECC71','#3498DB','#F39C12'];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.8 + 's';
+    piece.style.animationDuration = (1.5 + Math.random()) + 's';
+    piece.style.transform = `rotate(${Math.random()*360}deg)`;
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(piece);
+    piece.addEventListener('animationend', () => piece.remove());
+  }
+}
+
+// ===================================================================
+// TAB SWITCHING
+// ===================================================================
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('content-' + tabId).classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+  window.location.hash = tabId;
+  // Tab-specific refresh
+  if (tabId === 'tracker') renderTracker();
+  if (tabId === 'capture') renderCaptures();
+}
+
+// Handle hash on load
+function initTabFromHash() {
+  const hash = window.location.hash.replace('#','');
+  const valid = ['launch','tracker','lifemap','emergency','capture'];
+  if (valid.includes(hash)) switchTab(hash);
+}
+
+// ===================================================================
+// HEADER DATE
+// ===================================================================
+function updateHeader() {
+  const now = new Date();
+  const monthDay = (now.getMonth()+1) + '月' + now.getDate() + '日';
+  document.getElementById('headerDate').textContent = monthDay;
+  document.getElementById('headerWeekday').textContent = WEEKDAY_NAMES_FULL[now.getDay()];
+}
+
+// ===================================================================
+// TAB 1: TODAY LAUNCH
+// ===================================================================
+function initTodayLaunch() {
+  const wday = getTodayWday();
+  const sched = WEEKLY_SCHEDULE[wday];
+  const today = dateStr();
+
+  // Weekday label
+  document.getElementById('todayWeekdayLabel').textContent = WEEKDAY_NAMES[wday] + ' · 今日任务';
+
+  // Task text
+  document.getElementById('todayTaskText').textContent = sched.emoji + ' ' + sched.task;
+
+  // Meta chips
+  const metaEl = document.getElementById('todayMeta');
+  metaEl.innerHTML = '';
+  if (sched.trigger) {
+    metaEl.innerHTML += `<div class="meta-chip trigger">⚡ ${sched.trigger}</div>`;
+  }
+  if (sched.time) {
+    metaEl.innerHTML += `<div class="meta-chip time">⏱️ ${sched.time}</div>`;
+  }
+
+  // Special day handling
+  const card = document.getElementById('todayTaskCard');
+  if (sched.special === 'rest') {
+    card.style.background = 'linear-gradient(135deg, #F0FFF4, #F0F8FF)';
+    card.style.borderColor = '#A8D8B0';
+  } else if (sched.special === 'restart') {
+    card.style.background = 'linear-gradient(135deg, #F5EEFF, #EEF5FF)';
+    card.style.borderColor = '#C8A8E0';
+  }
+
+  // Main check state
+  const trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  const todayData = trackerData[today] || {};
+  updateMainCheckDisplay(todayData.mainDone);
+
+  // Redlines
+  renderRedlines(wday);
+
+  // Anchor
+  loadAnchorDisplay(today);
+
+  // Timer init
+  initTimer();
+}
+
+function renderRedlines(wday) {
+  const grid = document.getElementById('redlinesGrid');
+  grid.innerHTML = '';
+
+  const body = REDLINES.body[wday];
+  const parenting = REDLINES.parenting[wday];
+  const study = REDLINES.study[wday];
+
+  const items = [
+    { type: '身体', task: body },
+    { type: '育儿', task: parenting },
+    { type: '学习', task: study }
+  ];
+
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'redline-item' + (item.task ? '' : ' no-task');
+    div.innerHTML = `<div class="redline-type">${item.type}</div>
+      <div class="redline-desc">${item.task || '今日无 —'}</div>`;
+    grid.appendChild(div);
+  });
+}
+
+// Main check toggle
+function toggleMainCheck() {
+  const today = dateStr();
+  let trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  if (!trackerData[today]) trackerData[today] = {};
+  const wasDone = trackerData[today].mainDone;
+  trackerData[today].mainDone = !wasDone;
+  setStorage(STORAGE_KEYS.trackerData, trackerData);
+
+  updateMainCheckDisplay(trackerData[today].mainDone);
+
+  if (!wasDone) {
+    playBeep('done');
+    launchConfetti(40);
+    showToast('🎉 太棒了！今日任务完成！', 2500);
+  }
+}
+
+function updateMainCheckDisplay(done) {
+  const btn = document.getElementById('mainCheckBtn');
+  const icon = document.getElementById('mainCheckIcon');
+  const label = document.getElementById('mainCheckLabel');
+  if (done) {
+    btn.classList.add('completed');
+    icon.textContent = '✓';
+    label.textContent = '已完成！继续保持 💪';
+  } else {
+    btn.classList.remove('completed');
+    icon.textContent = '○';
+    label.textContent = '那一件事完成了 ✅';
+  }
+}
+
+// ===================================================================
+// ANCHOR
+// ===================================================================
+function loadAnchorDisplay(today) {
+  const anchors = getStorage(STORAGE_KEYS.anchors, {});
+  const todayAnchor = anchors[today];
+  const savedDiv = document.getElementById('anchorSavedDisplay');
+  const inputDiv = document.getElementById('anchorInputDisplay');
+  const savedText = document.getElementById('anchorSavedText');
+
+  if (todayAnchor) {
+    savedDiv.style.display = 'block';
+    inputDiv.style.display = 'none';
+    savedText.textContent = todayAnchor;
+  } else {
+    savedDiv.style.display = 'none';
+    inputDiv.style.display = 'block';
+  }
+}
+
+function saveAnchor() {
+  const text = document.getElementById('anchorTextarea').value.trim();
+  if (!text) { showToast('请写一句话再保存'); return; }
+  const today = dateStr();
+  let anchors = getStorage(STORAGE_KEYS.anchors, {});
+
+  // Also mark anchor in tracker
+  let trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  if (!trackerData[today]) trackerData[today] = {};
+  trackerData[today].anchor = true;
+  setStorage(STORAGE_KEYS.trackerData, trackerData);
+
+  anchors[today] = text;
+  setStorage(STORAGE_KEYS.anchors, anchors);
+  loadAnchorDisplay(today);
+  showToast('💾 锚点已保存');
+}
+
+function editAnchor() {
+  const today = dateStr();
+  const anchors = getStorage(STORAGE_KEYS.anchors, {});
+  const ta = document.getElementById('anchorTextarea');
+  ta.value = anchors[today] || '';
+  document.getElementById('anchorSavedDisplay').style.display = 'none';
+  document.getElementById('anchorInputDisplay').style.display = 'block';
+  ta.focus();
+}
+
+// ===================================================================
+// TIMER
+// ===================================================================
+let timerInterval = null;
+let timerSeconds = 25 * 60;
+let timerRunning = false;
+let timerTotalSeconds = 25 * 60;
+
+function selectPreset(btn, mins) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if (!timerRunning) {
+    timerSeconds = mins * 60;
+    timerTotalSeconds = mins * 60;
+    updateTimerDisplay();
+  }
+}
+
+function timerToggle() {
+  if (timerRunning) {
+    timerPause();
+  } else {
+    timerStart();
+  }
+}
+
+function timerStart() {
+  timerRunning = true;
+  document.getElementById('timerStartBtn').textContent = '⏸ 暂停';
+  document.getElementById('timerDisplay').classList.add('running');
+  document.getElementById('timerDisplay').classList.remove('done-state');
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    if (timerSeconds <= 0) {
+      timerSeconds = 0;
+      updateTimerDisplay();
+      timerDone();
+      return;
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function timerPause() {
+  timerRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('timerStartBtn').textContent = '▶ 继续';
+  document.getElementById('timerDisplay').classList.remove('running');
+}
+
+function timerReset() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  const selected = document.querySelector('.preset-btn.selected');
+  const mins = selected ? parseInt(selected.dataset.mins) : 25;
+  timerSeconds = mins * 60;
+  timerTotalSeconds = mins * 60;
+  document.getElementById('timerStartBtn').textContent = '▶ 开始';
+  document.getElementById('timerDisplay').classList.remove('running','done-state');
+  updateTimerDisplay();
+}
+
+function timerDone() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('timerDisplay').classList.remove('running');
+  document.getElementById('timerDisplay').classList.add('done-state');
+  document.getElementById('timerStartBtn').textContent = '▶ 再来一次';
+  playBeep('done');
+  showToast('🎉 专注时间结束！休息一下', 3000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function initTimer() {
+  updateTimerDisplay();
+}
+
+// ===================================================================
+// MINI TIMER (2-minute emergency)
+// ===================================================================
+let miniTimerInterval = null;
+let miniTimerSecs = 120;
+let miniTimerRunning = false;
+
+function miniTimerToggle() {
+  if (miniTimerRunning) {
+    clearInterval(miniTimerInterval);
+    miniTimerRunning = false;
+    document.getElementById('miniTimerBtn').textContent = '▶ 继续';
+  } else {
+    if (miniTimerSecs <= 0) {
+      miniTimerSecs = 120;
+      document.getElementById('miniTimerDisplay').classList.remove('done-state');
+    }
+    miniTimerRunning = true;
+    document.getElementById('miniTimerBtn').textContent = '⏸ 暂停';
+    miniTimerInterval = setInterval(() => {
+      miniTimerSecs--;
+      if (miniTimerSecs <= 0) {
+        miniTimerSecs = 0;
+        updateMiniTimerDisplay();
+        clearInterval(miniTimerInterval);
+        miniTimerRunning = false;
+        document.getElementById('miniTimerBtn').textContent = '↺ 再来一次';
+        document.getElementById('miniTimerDisplay').classList.add('done-state');
+        playBeep('done');
+        showToast('2分钟到了！继续还是停？都行 👍');
+      } else {
+        updateMiniTimerDisplay();
+      }
+    }, 1000);
+  }
+}
+
+function updateMiniTimerDisplay() {
+  const m = Math.floor(miniTimerSecs / 60);
+  const s = miniTimerSecs % 60;
+  document.getElementById('miniTimerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+// ===================================================================
+// TAB 2: TRACKER
+// ===================================================================
+function onStartDateChange() {
+  const val = document.getElementById('startDateInput').value;
+  if (val) {
+    setStorage(STORAGE_KEYS.startDate, val);
+    renderTracker();
+  }
+}
+
+function renderTracker() {
+  const startStr = getStorage(STORAGE_KEYS.startDate, null);
+  const grid = document.getElementById('trackerGrid');
+  grid.innerHTML = '';
+
+  if (!startStr) {
+    grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);font-size:0.9rem;">请先设置21天挑战开始日期 ☝️</div>';
+    updateTrackerStats([], null);
+    return;
+  }
+
+  const startDate = parseDateStr(startStr);
+  const trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  const today = dateStr();
+
+  const weekLabels = ['🚀 启动周', '📋 复制周', '🌊 心流周'];
+  const weekColors = ['var(--coral)','var(--teal)','var(--purple)'];
+  let allDayStats = [];
+
+  for (let week = 0; week < 3; week++) {
+    const weekBlock = document.createElement('div');
+    weekBlock.className = 'week-block';
+
+    const wHeader = document.createElement('div');
+    wHeader.className = 'week-header';
+    wHeader.style.background = `linear-gradient(135deg, ${weekColors[week]}, ${weekColors[week]})`;
+    wHeader.textContent = `第${week+1}周 ${weekLabels[week]}`;
+    weekBlock.appendChild(wHeader);
+
+    let weekDone = 0;
+    let weekTotal = 0;
+
+    for (let day = 0; day < 7; day++) {
+      const dayOffset = week * 7 + day;
+      const dayDate = addDays(startDate, dayOffset);
+      const dayStr = dateStr(dayDate);
+      const wday = dayDate.getDay();
+      const isToday = dayStr === today;
+      const isPast = dayDate < new Date(today);
+      const isFuture = dayDate > new Date(today);
+      const dayData = trackerData[dayStr] || {};
+
+      const row = document.createElement('div');
+      row.className = 'day-row';
+      if (isToday) row.classList.add('today-row');
+
+      const dayLabel = document.createElement('div');
+      dayLabel.className = 'day-label' + (isToday ? ' today-label' : '');
+      dayLabel.textContent = WEEKDAY_NAMES[wday];
+      row.appendChild(dayLabel);
+
+      const dateLabel = document.createElement('div');
+      dateLabel.className = 'day-date';
+      dateLabel.textContent = (dayDate.getMonth()+1) + '/' + dayDate.getDate();
+      row.appendChild(dateLabel);
+
+      if (isToday) {
+        const todayBadge = document.createElement('span');
+        todayBadge.className = 'badge badge-coral';
+        todayBadge.style.fontSize = '0.65rem';
+        todayBadge.textContent = '今天';
+        row.appendChild(todayBadge);
+      }
+
+      // Weekend (Sat=6) — rest day
+      if (wday === 6) {
+        row.classList.add('rest-day');
+        const restText = document.createElement('div');
+        restText.className = 'rest-text';
+        restText.textContent = '留白日 🌿';
+        row.appendChild(restText);
+        weekBlock.appendChild(row);
+        continue;
+      }
+
+      // Sunday — restart ritual
+      if (wday === 0) {
+        row.classList.add('rest-day');
+        const restText = document.createElement('div');
+        restText.className = 'rest-text';
+        restText.style.marginRight = 'auto';
+        restText.textContent = '周日 重启仪式 🔄';
+        row.appendChild(restText);
+
+        // Single checkbox: 重启仪式
+        const checksWrap = document.createElement('div');
+        checksWrap.className = 'tracker-checks';
+        const checkEl = makeTrackerCheck('重启', dayStr, 'restart', dayData.restart, isFuture, weekBlock);
+        checksWrap.appendChild(checkEl);
+        row.appendChild(checksWrap);
+
+        const stat = { done: dayData.restart ? 1 : 0, total: 1, mainDone: dayData.restart };
+        allDayStats.push({ dayStr, ...stat });
+        if (!isFuture) { weekDone += stat.done; weekTotal += stat.total; }
+        weekBlock.appendChild(row);
+        continue;
+      }
+
+      // Regular weekday
+      const sched = WEEKLY_SCHEDULE[wday];
+      const bodyTask = REDLINES.body[wday];
+      const parentingTask = REDLINES.parenting[wday];
+      const studyTask = REDLINES.study[wday];
+
+      const checksWrap = document.createElement('div');
+      checksWrap.className = 'tracker-checks';
+
+      // 那一件事
+      checksWrap.appendChild(makeTrackerCheck('那件事', dayStr, 'mainDone', dayData.mainDone, isFuture, weekBlock));
+      // 身体
+      if (bodyTask) checksWrap.appendChild(makeTrackerCheck('身体', dayStr, 'body', dayData.body, isFuture, weekBlock));
+      // 育儿
+      if (parentingTask) checksWrap.appendChild(makeTrackerCheck('育儿', dayStr, 'parenting', dayData.parenting, isFuture, weekBlock));
+      // 学习
+      checksWrap.appendChild(makeTrackerCheck('学习', dayStr, 'study', dayData.study, isFuture, weekBlock));
+      // 锚点
+      checksWrap.appendChild(makeTrackerCheck('锚点', dayStr, 'anchor', dayData.anchor, isFuture, weekBlock));
+
+      row.appendChild(checksWrap);
+
+      // Completion
+      let dayDone = 0, dayTotal = 0;
+      dayTotal++; if (dayData.mainDone) dayDone++;
+      dayTotal++; if (dayData.study) dayDone++;
+      dayTotal++; if (dayData.anchor) dayDone++;
+      if (bodyTask) { dayTotal++; if (dayData.body) dayDone++; }
+      if (parentingTask) { dayTotal++; if (dayData.parenting) dayDone++; }
+
+      allDayStats.push({ dayStr, done: dayDone, total: dayTotal, mainDone: dayData.mainDone });
+      if (!isFuture) { weekDone += dayDone; weekTotal += dayTotal; }
+
+      if (dayData.mainDone && !isFuture) row.classList.add('completed-day');
+
+      weekBlock.appendChild(row);
+    }
+
+    grid.appendChild(weekBlock);
+
+    // Week progress bar
+    const pct = weekTotal > 0 ? Math.round(weekDone/weekTotal*100) : 0;
+    const barId = ['w1bar','w2bar','w3bar'][week];
+    const pctId = ['w1pct','w2pct','w3pct'][week];
+    document.getElementById(barId).style.width = pct + '%';
+    document.getElementById(pctId).textContent = pct + '%';
+  }
+
+  updateTrackerStats(allDayStats, today);
+}
+
+function makeTrackerCheck(label, dayStr, field, checked, isFuture, weekBlock) {
+  const el = document.createElement('div');
+  el.className = 'mini-check' + (checked ? ' checked' : '');
+  if (isFuture) { el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; }
+
+  el.innerHTML = `<div class="mini-check-box">${checked ? miniSvgCheck() : ''}</div><span>${label}</span>`;
+
+  if (!isFuture) {
+    el.addEventListener('click', () => {
+      let trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+      if (!trackerData[dayStr]) trackerData[dayStr] = {};
+      const wasChecked = trackerData[dayStr][field];
+      trackerData[dayStr][field] = !wasChecked;
+      setStorage(STORAGE_KEYS.trackerData, trackerData);
+
+      el.classList.toggle('checked', !wasChecked);
+      el.querySelector('.mini-check-box').innerHTML = !wasChecked ? miniSvgCheck() : '';
+
+      if (!wasChecked) {
+        playBeep('tick');
+        // Check if day is complete
+        checkDayComplete(dayStr, weekBlock);
+      }
+
+      // Update stats
+      const startStr = getStorage(STORAGE_KEYS.startDate, null);
+      if (startStr) {
+        const allStats = computeAllDayStats(parseDateStr(startStr));
+        updateTrackerStats(allStats, dateStr());
+      }
+    });
+  }
+  return el;
+}
+
+function checkDayComplete(dayStr, weekBlock) {
+  const d = parseDateStr(dayStr);
+  const wday = d.getDay();
+  if (wday === 6) return;
+  const trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  const dayData = trackerData[dayStr] || {};
+  const bodyTask = REDLINES.body[wday];
+  const parentingTask = REDLINES.parenting[wday];
+
+  let required = ['mainDone','study','anchor'];
+  if (bodyTask) required.push('body');
+  if (parentingTask) required.push('parenting');
+  if (wday === 0) required = ['restart'];
+
+  const allDone = required.every(f => dayData[f]);
+  if (allDone) {
+    launchConfetti(20);
+    showToast('🌟 这一天全部完成！太厉害了！', 2500);
+    // Find the row and animate
+    const rows = document.querySelectorAll('.day-row');
+    rows.forEach(r => {
+      if (r.getAttribute('data-date') === dayStr) r.classList.add('day-glow');
+    });
+  }
+}
+
+function computeAllDayStats(startDate) {
+  const trackerData = getStorage(STORAGE_KEYS.trackerData, {});
+  const today = dateStr();
+  let stats = [];
+  for (let i = 0; i < 21; i++) {
+    const d = addDays(startDate, i);
+    const ds = dateStr(d);
+    const wday = d.getDay();
+    if (wday === 6) continue;
+    const dayData = trackerData[ds] || {};
+    const isFuture = d > new Date(today);
+    if (isFuture) continue;
+    const bodyTask = REDLINES.body[wday];
+    const parentingTask = REDLINES.parenting[wday];
+    let done = 0, total = 0;
+    if (wday === 0) {
+      total = 1; if (dayData.restart) done = 1;
+    } else {
+      total = 3; done += (dayData.mainDone?1:0)+(dayData.study?1:0)+(dayData.anchor?1:0);
+      if (bodyTask) { total++; if (dayData.body) done++; }
+      if (parentingTask) { total++; if (dayData.parenting) done++; }
+    }
+    stats.push({ dayStr: ds, done, total, mainDone: wday===0 ? dayData.restart : dayData.mainDone });
+  }
+  return stats;
+}
+
+function updateTrackerStats(allDayStats, today) {
+  const past = allDayStats.filter(s => s.total > 0);
+  let totalDone = 0, totalPossible = 0;
+  past.forEach(s => { totalDone += s.done; totalPossible += s.total; });
+  const rate = totalPossible > 0 ? Math.round(totalDone/totalPossible*100) : 0;
+  document.getElementById('statRate').textContent = rate + '%';
+
+  // Streak: consecutive days (going backwards from today) with mainDone
+  let streak = 0;
+  if (today) {
+    // Sort stats by date descending
+    const sorted = [...past].filter(s=>s.mainDone).map(s=>s.dayStr).sort().reverse();
+    if (sorted.length > 0) {
+      let checkDate = parseDateStr(sorted[0]);
+      // Walk backwards
+      for (let i = 0; i < sorted.length; i++) {
+        const expected = addDays(new Date(), -streak);
+        // Simple: just count consecutive from latest
+        if (i === 0) { streak = 1; continue; }
+        const prev = parseDateStr(sorted[i]);
+        const curr = parseDateStr(sorted[i-1]);
+        const diff = (curr - prev) / 86400000;
+        if (diff <= 2) { // allow Saturday gaps
+          streak++;
+        } else break;
+      }
+    }
+  }
+  document.getElementById('statStreak').innerHTML = streak + '<span class="streak-fire">🔥</span>';
+  document.getElementById('statDaysDone').textContent = past.filter(s=>s.mainDone).length;
+}
+
+// ===================================================================
+// TAB 4: EMERGENCY
+// ===================================================================
+function toggleEmergency(n) {
+  const btn = document.getElementById('emgBtn' + n);
+  const panel = document.getElementById('emgPanel' + n);
+  const isOpen = panel.classList.contains('open');
+
+  // Close all
+  [1,2,3].forEach(i => {
+    document.getElementById('emgPanel' + i).classList.remove('open');
+    document.getElementById('emgBtn' + i).classList.remove('open');
+  });
+
+  if (!isOpen) {
+    panel.classList.add('open');
+    btn.classList.add('open');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// ===================================================================
+// TAB 5: CAPTURES
+// ===================================================================
+let selectedTag = '灵感';
+
+function selectTag(btn) {
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTag = btn.dataset.tag;
+}
+
+function saveCapture() {
+  const text = document.getElementById('captureInput').value.trim();
+  if (!text) { showToast('请输入内容再保存'); return; }
+
+  let captures = getStorage(STORAGE_KEYS.captures, []);
+  captures.unshift({
+    text,
+    tag: selectedTag,
+    timestamp: new Date().toISOString(),
+    exported: false
+  });
+  setStorage(STORAGE_KEYS.captures, captures);
+  document.getElementById('captureInput').value = '';
+  renderCaptures();
+  showToast('✅ 已捕获！回去干活吧 💪');
+}
+
+function renderCaptures() {
+  const captures = getStorage(STORAGE_KEYS.captures, []);
+  const today = dateStr();
+  const container = document.getElementById('captureList');
+
+  const todayCaptures = captures.filter(c => c.timestamp.startsWith(today));
+
+  if (todayCaptures.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);font-size:0.88rem;">今天还没有捕获 — 专注很棒！</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  todayCaptures.forEach((c, i) => {
+    const actualIndex = captures.findIndex(x => x.timestamp === c.timestamp && x.text === c.text);
+    const item = document.createElement('div');
+    item.className = 'capture-item' + (c.exported ? ' exported' : '');
+
+    const t = new Date(c.timestamp);
+    const timeStr = String(t.getHours()).padStart(2,'0') + ':' + String(t.getMinutes()).padStart(2,'0');
+
+    item.innerHTML = `
+      <div>
+        <div class="capture-tag">#${c.tag}</div>
+        <div class="capture-time">${timeStr}</div>
+      </div>
+      <div class="capture-text">${escapeHtml(c.text)}</div>
+      <button class="capture-del" onclick="deleteCapture(${actualIndex})" title="删除">✕</button>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function deleteCapture(index) {
+  let captures = getStorage(STORAGE_KEYS.captures, []);
+  captures.splice(index, 1);
+  setStorage(STORAGE_KEYS.captures, captures);
+  renderCaptures();
+}
+
+function exportCaptures() {
+  let captures = getStorage(STORAGE_KEYS.captures, []);
+  const today = dateStr();
+  const todayCaptures = captures.filter(c => c.timestamp.startsWith(today));
+
+  if (todayCaptures.length === 0) {
+    showToast('今天还没有捕获内容');
+    return;
+  }
+
+  const now = new Date();
+  const header = `# 碳碳捕获箱 ${today}\n\n`;
+  const lines = todayCaptures.map(c => {
+    const t = new Date(c.timestamp);
+    const timeStr = String(t.getHours()).padStart(2,'0') + ':' + String(t.getMinutes()).padStart(2,'0');
+    return `- [#${c.tag}] ${timeStr} ${c.text}`;
+  }).join('\n');
+
+  const md = header + lines + '\n';
+
+  // Mark as exported
+  captures = captures.map(c => {
+    if (c.timestamp.startsWith(today)) return {...c, exported: true};
+    return c;
+  });
+  setStorage(STORAGE_KEYS.captures, captures);
+
+  navigator.clipboard.writeText(md).then(() => {
+    showToast('📋 已复制到剪贴板！可粘贴到Obsidian', 2500);
+    renderCaptures();
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = md;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('📋 已复制到剪贴板！', 2000);
+    renderCaptures();
+  });
+}
+
+function clearExported() {
+  let captures = getStorage(STORAGE_KEYS.captures, []);
+  const today = dateStr();
+  captures = captures.filter(c => !(c.timestamp.startsWith(today) && c.exported));
+  setStorage(STORAGE_KEYS.captures, captures);
+  renderCaptures();
+  showToast('🗑 已清空已导出的内容');
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// ===================================================================
+// INIT
+// ===================================================================
+function init() {
+  updateHeader();
+  initTodayLaunch();
+  initTabFromHash();
+
+  // Load start date
+  const savedStart = getStorage(STORAGE_KEYS.startDate, null);
+  if (savedStart) {
+    document.getElementById('startDateInput').value = savedStart;
+  }
+
+  // Update header clock
+  setInterval(updateHeader, 60000);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+// Handle back button / hash change
+window.addEventListener('hashchange', initTabFromHash);
+
+// ===================================================================
+// PWA-like: prevent zoom on double-tap (already handled by meta viewport)
+// Keyboard shortcut: Enter to save capture
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'Enter') {
+    const active = document.querySelector('.tab-content.active');
+    if (active && active.id === 'content-capture') {
+      saveCapture();
+    } else if (active && active.id === 'content-launch') {
+      saveAnchor();
+    }
+  }
+});
+</script>
+</body>
+</html>
