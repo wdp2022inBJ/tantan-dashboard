@@ -913,12 +913,16 @@ async function syncUp(){
   try{
     const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{
       method:'PATCH',
-      headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+      headers:{'Authorization':'Bearer '+GH_TOKEN,'Content-Type':'application/json','Accept':'application/json'},
       body:body
     });
     if(r.ok){showToast('云端同步 ✓');showSyncStatus('synced');}
-    else{showToast('同步失败：'+r.status);showSyncStatus('error');}
-  }catch(e){showToast('网络错误');showSyncStatus('error');}
+    else{
+      let errMsg='同步失败：'+r.status;
+      try{const j=await r.json();errMsg+=' '+j.message;}catch(e){}
+      showToast(errMsg);showSyncStatus('error');
+    }
+  }catch(e){showToast('网络错误: '+e.message);showSyncStatus('error');}
 }
 
 // 从云端下载
@@ -926,9 +930,9 @@ async function syncDown(){
   if(!GH_TOKEN){showToast('请先设置Token');setToken();return;}
   try{
     const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{
-      headers:{'Authorization':'token '+GH_TOKEN}
+      headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/json'}
     });
-    if(!r.ok){showToast('下载失败：'+r.status);return;}
+    if(!r.ok){let m='下载失败：'+r.status;try{const j=await r.json();m+=' '+j.message;}catch(e){};showToast(m);return;}
     const j=await r.json();
     const raw=j.files[GH_GIST_FILE]?.content;
     if(!raw){showToast('云端无数据');return;}
@@ -942,7 +946,7 @@ async function syncDown(){
     showSyncStatus('synced');
     // 刷新页面数据
     updateHeader();buildWeeklySection();loadTodayData();buildGantt();
-  }catch(e){showToast('网络错误');showSyncStatus('error');}
+  }catch(e){showToast('网络错误: '+e.message);showSyncStatus('error');}
 }
 
 // 自动同步（保存时自动上传）
@@ -976,7 +980,7 @@ async function autoSyncDown(){
   if(!GH_TOKEN)return;
   try{
     showSyncStatus('syncing');
-    const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{headers:{'Authorization':'token '+GH_TOKEN}});
+    const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/json'}});
     if(!r.ok){showSyncStatus('offline');return;}
     const j=await r.json();
     const raw=j.files[GH_GIST_FILE]?.content;
