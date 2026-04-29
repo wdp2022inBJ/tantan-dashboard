@@ -166,6 +166,7 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
   <div class="header-day" id="header-day">DAY 001 · 产品周</div>
   <div class="header-title" id="header-title">改详情页</div>
   <div class="header-sub" id="header-sub">一件做完，今天就赢了</div>
+  <span id="sync-status" style="position:absolute;top:100px;right:24px;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.5px"></span>
   <div class="header-streak">
     <div class="streak-num" id="streak-num">1</div>
     <div class="streak-label">连续天</div>
@@ -421,6 +422,16 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
       <div class="tip-text">把手机上的打卡数据导出为文件，传到电脑端的 Obsidian 里查阅。</div>
       <button style="width:100%;background:var(--black);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:13px;cursor:pointer;margin-top:12px" onclick="exportAllData()">📤 导出全部数据</button>
       <button style="width:100%;background:var(--pink-pale);border:1px solid var(--pink-border);border-radius:12px;padding:14px;font-family:var(--body);font-size:13px;color:var(--pink-dark);cursor:pointer;margin-top:8px" onclick="exportTodayAsMarkdown()">📄 导出今日日记（Markdown）</button>
+    </div>
+  </div>
+  <div class="section animate-in" style="animation-delay:.25s">
+    <div class="section-header"><div class="section-title"><span>☁️</span>云端同步</div></div>
+    <div class="section-body">
+      <div id="sync-info" style="font-size:11px;color:var(--gray);margin-bottom:10px">首次使用请输入 Token 并同步</div>
+      <div id="sync-status-text" style="font-size:11px;color:var(--pink-deep);margin-bottom:8px;min-height:16px"></div>
+      <input class="mini-input" id="input-token" type="password" placeholder="粘贴 GitHub Token（仅首次）" style="margin-bottom:8px">
+      <button style="width:100%;background:var(--pink-deep);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:13px;cursor:pointer" onclick="saveTokenAndSync()">☁️ 同步到云端</button>
+      <button style="width:100%;background:var(--pure);border:1px solid var(--pink-border);border-radius:12px;padding:10px;font-family:var(--body);font-size:12px;color:var(--gray);cursor:pointer;margin-top:6px" onclick="loadFromCloud()">📥 从云端拉取</button>
     </div>
   </div>
 </div>
@@ -744,6 +755,7 @@ function changeWeekType(){
 
 // ── 初始化 ──
 function init(){
+  initToken();
   const start=localStorage.getItem('dashStartDate');
   if(!start){
     document.getElementById('setup-overlay').classList.add('open');
@@ -831,7 +843,165 @@ function exportTodayAsMarkdown(){
   showToast('日记已导出 ✓');
 }
 
+// ══════════════════════════════════════
+//  ☁️ 云端同步（GitHub Gist）
+// ══════════════════════════════════════
+// Token 从不硬编码！用户首次使用在「捕获」Tab输入后存入 localStorage
+const GH_GIST_ID='7ff7b3c6e7da5b7e8c3c7d6c5b4a3923';
+const GH_GIST_FILE='tantan-dashboard-data.json';
+let GH_TOKEN='';
+
+// Token 输入并同步（按钮触发）
+function saveTokenAndSync(){
+  const token=document.getElementById('input-token')?.value.trim();
+  if(!token){showToast('请先粘贴 Token');return;}
+  localStorage.setItem('gh_token',token);
+  localStorage.setItem('ghToken',token); // 兼容两种 key
+  GH_TOKEN=token;
+  showSyncStatus('syncing');
+  syncUp().then(()=>{
+    // 同步后更新 sync-info 显示
+    const info=document.getElementById('sync-info');
+    if(info)info.textContent='已保存 Token 并同步到云端 ✓';
+  });
+}
+
+// 从云端拉取（按钮触发）
+function loadFromCloud(){
+  if(!GH_TOKEN){showToast('请先设置 Token');return;}
+  showSyncStatus('syncing');
+  syncDown();
+}
+
+// 手动 Token 设置（首次使用）
+function initToken(){
+  const saved=localStorage.getItem('gh_token')||localStorage.getItem('ghToken');
+  if(saved){GH_TOKEN=saved;}
+  // 如果token存在，显示同步状态
+  if(GH_TOKEN)showSyncStatus('ready');
+}
+function setToken(){
+  const t=prompt('输入 GitHub Token（ghp_xxxxxx）：');
+  if(!t)return;
+  localStorage.setItem('gh_token',t);
+  localStorage.setItem('ghToken',t); // 兼容两种 key
+  GH_TOKEN=t;
+  showToast('Token 已保存 ✓');
+}
+
+// 收集所有dashboard数据
+function collectAllData(){
+  const all={};
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+    if(key.startsWith('dash_')||key.startsWith('cravings_')||key.startsWith('journal_')){
+      all[key]=localStorage.getItem(key);
+    }
+  }
+  all.dashStartDate=localStorage.getItem('dashStartDate');
+  all.dashWeekType=localStorage.getItem('dashWeekType');
+  return all;
+}
+
+// 上传到云端
+async function syncUp(){
+  if(!GH_TOKEN){showToast('请先设置Token');setToken();return;}
+  const data=collectAllData();
+  data._lastSync=Date.now();
+  localStorage.setItem('_lastSync',data._lastSync);
+  const body=JSON.stringify({files:{[GH_GIST_FILE]:{content:JSON.stringify(data,null,2)}}});
+  try{
+    const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{
+      method:'PATCH',
+      headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+      body:body
+    });
+    if(r.ok){showToast('云端同步 ✓');showSyncStatus('synced');}
+    else{showToast('同步失败：'+r.status);showSyncStatus('error');}
+  }catch(e){showToast('网络错误');showSyncStatus('error');}
+}
+
+// 从云端下载
+async function syncDown(){
+  if(!GH_TOKEN){showToast('请先设置Token');setToken();return;}
+  try{
+    const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{
+      headers:{'Authorization':'token '+GH_TOKEN}
+    });
+    if(!r.ok){showToast('下载失败：'+r.status);return;}
+    const j=await r.json();
+    const raw=j.files[GH_GIST_FILE]?.content;
+    if(!raw){showToast('云端无数据');return;}
+    const data=JSON.parse(raw);
+    // 合并到localStorage（云端覆盖本地）
+    Object.keys(data).forEach(key=>{
+      if(key==='_meta'||key==='version')return;
+      localStorage.setItem(key,typeof data[key]==='string'?data[key]:JSON.stringify(data[key]));
+    });
+    showToast('云端数据已同步 ✓');
+    showSyncStatus('synced');
+    // 刷新页面数据
+    updateHeader();buildWeeklySection();loadTodayData();buildGantt();
+  }catch(e){showToast('网络错误');showSyncStatus('error');}
+}
+
+// 自动同步（保存时自动上传）
+const _origAutoSave=autoSave;
+let syncTimer=null;
+autoSave=function(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    const data=collectData();
+    localStorage.setItem(todayKey(),JSON.stringify(data));
+    updateAnchorCount();
+    showToast('已自动保存 ✓');
+    // 自动上传到云端
+    clearTimeout(syncTimer);
+    syncTimer=setTimeout(()=>syncUp(),2000);
+  },800);
+};
+
+// 同步状态指示器
+function showSyncStatus(status){
+  const map={ready:'☁️ 已连接',synced:'✅ 已同步',syncing:'⏳ 同步中…',error:'❌ 同步失败',offline:'📡 离线'};
+  const msg=map[status]||'';
+  const header=document.getElementById('sync-status');
+  if(header)header.textContent=msg;
+  const tab=document.getElementById('sync-status-text');
+  if(tab)tab.textContent=msg;
+}
+
+// 自动拉取（打开页面时）
+async function autoSyncDown(){
+  if(!GH_TOKEN)return;
+  try{
+    showSyncStatus('syncing');
+    const r=await fetch('https://api.github.com/gists/'+GH_GIST_ID,{headers:{'Authorization':'token '+GH_TOKEN}});
+    if(!r.ok){showSyncStatus('offline');return;}
+    const j=await r.json();
+    const raw=j.files[GH_GIST_FILE]?.content;
+    if(!raw){showSyncStatus('ready');return;}
+    const data=JSON.parse(raw);
+    const cloudTime=data['_lastSync']||0;
+    const localTime=localStorage.getItem('_lastSync')||0;
+    // 只有云端更新才覆盖
+    if(cloudTime>localTime){
+      Object.keys(data).forEach(key=>{
+        if(key==='_meta'||key==='version'||key==='_lastSync')return;
+        localStorage.setItem(key,typeof data[key]==='string'?data[key]:JSON.stringify(data[key]));
+      });
+      localStorage.setItem('_lastSync',cloudTime);
+      updateHeader();buildWeeklySection();loadTodayData();buildGantt();
+      showSyncStatus('synced');
+    }else{
+      showSyncStatus('ready');
+    }
+  }catch(e){showSyncStatus('offline');}
+}
+
 init();
+// 启动时自动拉取云端数据
+setTimeout(()=>autoSyncDown(),1000);
 </script>
 </body>
 </html>
