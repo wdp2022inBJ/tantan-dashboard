@@ -58,6 +58,42 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
 .emotion-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .emotion-chip{padding:6px 12px;border-radius:16px;font-size:12px;cursor:pointer;border:1px solid var(--gray-light);color:var(--gray);transition:all .15s;}
 .emotion-chip.active{background:var(--black);border-color:var(--black);color:#fff}
+.alt-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.alt-btn{padding:7px 12px;border-radius:10px;font-size:11px;cursor:pointer;background:var(--pink-pale);border:1px solid var(--pink-border);color:var(--pink-dark);transition:all .15s;}
+.alt-btn.selected{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff}
+.week-phase{background:var(--black);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.week-phase-week{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;margin-bottom:4px}
+.week-phase-name{font-size:15px;color:#fff;font-weight:600}
+.week-phase-goal{font-size:11px;color:var(--pink);margin-top:2px}
+.week-phase-prog{font-family:var(--serif);font-size:28px;color:var(--pink)}
+.week-phase-prog-label{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px}
+.ex-btn{padding:6px 12px;border-radius:8px;font-size:11px;cursor:pointer;border:1px solid var(--gray-light);color:var(--gray);background:none;font-family:var(--body);transition:all .15s;}
+.ex-btn.done-btn{border-color:var(--pink);color:var(--pink-deep);background:var(--pink-pale)}
+.ex-btn.star-btn{border-color:var(--black);color:var(--black);background:#F5F5F5}
+.gantt-wrap{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+.gantt{min-width:520px}
+.gantt-header{display:flex;margin-bottom:6px}
+.gantt-row-label{width:64px;flex-shrink:0;font-size:9px;color:var(--gray);display:flex;align-items:center;}
+.gantt-days{display:flex;flex:1;gap:2px}
+.gantt-day-head{flex:1;text-align:center;font-size:8px;color:var(--gray);padding:2px 0;}
+.gantt-day-head.today{color:var(--pink-deep);font-weight:700}
+.gantt-row{display:flex;align-items:center;margin-bottom:3px}
+.gantt-cells{display:flex;flex:1;gap:2px}
+.gantt-cell{flex:1;height:20px;border-radius:3px;background:var(--gray-light);cursor:pointer;transition:all .15s;}
+.gantt-cell.done-biz{background:var(--black)}
+.gantt-cell.done-diary{background:var(--pink-deep)}
+.gantt-cell.done-body{background:var(--pink);opacity:.8}
+.gantt-cell.done-weekly{background:#B8D4C8}
+.gantt-cell.done-craving{background:#F5DEB3}
+.gantt-cell.done-mood{background:var(--pink-pale);border:1px solid var(--pink-border)}
+.gantt-cell.today-cell{outline:2px solid var(--pink-deep);outline-offset:1px;}
+.gantt-cell.future{background:#F0F0F0;opacity:.4}
+.gantt-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--gray)}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+.review-q{background:var(--pink-pale);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+.review-q-label{font-size:11px;color:var(--pink-deep);font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.review-q-text{font-size:13px;color:var(--black2);line-height:1.6;margin-bottom:8px}
 .identity-box{background:var(--black);border-radius:14px;padding:18px;margin-bottom:12px;text-align:center;}
 .identity-label{font-size:10px;color:rgba(255,255,255,.3);letter-spacing:2px;margin-bottom:8px}
 .identity-text{font-family:var(--serif);font-size:15px;color:var(--pink);line-height:1.7;font-style:italic}
@@ -68,12 +104,12 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
 .data-card-label{font-size:10px;color:var(--gray);margin-top:4px;letter-spacing:.5px}
 .data-card.pink{background:var(--black)}.data-card.pink .data-card-num{color:var(--pink)}.data-card.pink .data-card-label{color:rgba(255,255,255,.4)}
 .prog-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.prog-label{font-size:11px;color:var(--gray);width:60px;flex-shrink:0}
+.prog-label{font-size:11px;color:var(--gray);width:70px;flex-shrink:0}
 .prog-bar{flex:1;height:6px;background:var(--gray-light);border-radius:3px;overflow:hidden}
 .prog-fill{height:100%;border-radius:3px;transition:width .6s ease}
-.prog-fill.ex{background:var(--black)}.prog-fill.diet{background:var(--pink-deep)}.prog-fill.mood{background:var(--pink)}
+.prog-fill.biz{background:var(--black)}.prog-fill.body{background:var(--pink-deep)}.prog-fill.mood{background:var(--pink)}
 .prog-pct{font-size:11px;color:var(--black2);font-weight:600;width:32px;text-align:right}
-.crash-btn{width:100%;background:var(--pink-pale);border:1px solid var(--pink-border);border-radius:12px;padding:12px;font-family:var(--body);font-size:12px;color:var(--pink-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
+.crash-btn{width:100%;background:var(--pink-pale);border:1px solid var(--pink-border);border-radius:12px;padding:12px;font-family:var(--body);font-size:12px;color:var(--pink-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex}
 .modal{background:var(--pure);border-radius:24px 24px 0 0;padding:28px 20px 40px;width:100%;max-width:430px;}
@@ -92,6 +128,9 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
 .setup-sub{font-size:12px;color:var(--gray);text-align:center;margin-bottom:24px;line-height:1.6}
 .setup-label{font-size:12px;color:var(--black2);margin-bottom:6px;font-weight:600}
 .setup-date{width:100%;border:1.5px solid var(--pink-border);border-radius:12px;padding:12px 14px;font-family:var(--body);font-size:14px;color:var(--black);background:var(--pink-pale);outline:none;margin-bottom:16px;}
+.setup-weektype{display:flex;gap:10px;margin-bottom:16px}
+.setup-weektype button{flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--pink-border);background:var(--pure);font-family:var(--body);font-size:13px;color:var(--gray);cursor:pointer;transition:all .15s;}
+.setup-weektype button.active{border-color:var(--pink-deep);background:var(--pink-pale);color:var(--pink-dark);font-weight:600}
 .setup-btn{width:100%;background:var(--black);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:14px;cursor:pointer;}
 .divider{height:1px;background:var(--pink-border);margin:10px 0}
 .tip-text{font-size:11px;color:var(--gray);line-height:1.7;font-style:italic;padding:4px 0}
@@ -99,36 +138,6 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
 .save-toast.show{opacity:1}
 .animate-in{animation:fadeUp .3s ease forwards}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-/* 主任务卡片 */
-.main-task-card{background:var(--pink-pale);border:1.5px solid var(--pink-border);border-radius:14px;padding:16px;margin-bottom:4px;}
-.main-task-name{font-family:var(--serif);font-size:18px;color:var(--black2);margin-bottom:6px;line-height:1.4}
-.main-task-meta{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:10px}
-.main-task-trigger{font-size:11px;color:var(--pink-dark);margin-bottom:12px;line-height:1.5}
-.main-task-btns{display:flex;gap:8px}
-.main-task-btn{flex:1;padding:10px;border-radius:10px;font-size:12px;cursor:pointer;border:1px solid var(--gray-light);color:var(--gray);background:var(--pure);font-family:var(--body);transition:all .2s;text-align:center;}
-.main-task-btn.done-btn.active{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff}
-.main-task-btn.star-btn.active{background:var(--black);border-color:var(--black);color:#fff}
-/* 项目地图 */
-.proj-card{background:var(--pure);border-radius:14px;border:1px solid var(--pink-border);padding:14px;margin-bottom:10px;}
-.proj-name{font-size:14px;font-weight:600;color:var(--black2);margin-bottom:6px}
-.proj-phase-badge{display:inline-block;font-size:10px;border-radius:8px;padding:2px 8px;margin-bottom:6px;}
-.proj-status{font-size:12px;color:var(--gray);margin-bottom:4px;line-height:1.5}
-.proj-milestone{font-size:11px;color:var(--pink-dark);font-style:italic}
-/* 捕手 */
-.ctx-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.ctx-chip{padding:6px 12px;border-radius:16px;font-size:11px;cursor:pointer;border:1px solid var(--gray-light);color:var(--gray);transition:all .15s;background:var(--pure);}
-.ctx-chip.active{background:var(--black);border-color:var(--black);color:#fff}
-.capture-item{padding:10px 12px;border:1px solid var(--pink-border);border-radius:10px;margin-bottom:8px;background:var(--pink-pale);}
-.capture-item-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
-.capture-time{font-size:10px;color:var(--gray)}
-.capture-cat{font-size:10px;color:var(--pink-dark);background:rgba(201,132,154,.12);border-radius:6px;padding:1px 6px;}
-.capture-text{font-size:12px;color:var(--black2);line-height:1.5}
-.capture-del{font-size:10px;color:var(--gray);cursor:pointer;margin-left:auto;padding:2px 6px;flex-shrink:0;}
-/* 字数统计 */
-.char-count{font-size:10px;color:var(--gray);text-align:right;margin-top:2px}
-/* 周复盘区块 */
-.review-block{background:var(--pink-pale);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
-.review-block-label{font-size:11px;color:var(--pink-deep);font-weight:600;margin-bottom:6px;letter-spacing:.5px}
 </style>
 </head>
 <body>
@@ -139,273 +148,271 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
 <div class="setup-overlay" id="setup-overlay">
   <div class="setup-box">
     <div class="setup-title">碳碳の<br>每日驾驶舱</div>
-    <div class="setup-sub">设置你的开始日期<br>系统会自动计算每天是第几天</div>
+    <div class="setup-sub">设置开始日期和起始周类型<br>系统会自动计算每日任务</div>
     <div class="setup-label">开始日期</div>
     <input type="date" class="setup-date" id="setup-date">
-    <button class="setup-btn" onclick="saveSetup()">启动驾驶舱 →</button>
+    <div class="setup-label">起始周类型</div>
+    <div class="setup-weektype">
+      <button id="wt-product" class="active" onclick="selectWeekType('product')">产品周</button>
+      <button id="wt-content" onclick="selectWeekType('content')">内容周</button>
+    </div>
+    <button class="setup-btn" onclick="saveSetup()">开始驾驶 →</button>
   </div>
 </div>
 
 <!-- HEADER -->
 <div class="header">
   <div class="header-tag">🚀 碳碳の每日驾驶舱</div>
-  <div class="header-day" id="header-day">DAY 001 · 周一</div>
-  <div class="header-title" id="header-title">今日<span>任务</span></div>
-  <div class="header-sub">一件事做完，今天就赢了</div>
+  <div class="header-day" id="header-day">DAY 001 · 产品周</div>
+  <div class="header-title" id="header-title">改详情页</div>
+  <div class="header-sub" id="header-sub">一件做完，今天就赢了</div>
   <div class="header-streak">
-    <div class="streak-num" id="streak-num">0</div>
+    <div class="streak-num" id="streak-num">1</div>
     <div class="streak-label">连续天</div>
   </div>
 </div>
 
-<!-- ───── 今日 ───── -->
+<!-- ====== Tab 1: 今日 ====== -->
 <div class="page active" id="page-today">
-
-  <!-- 今日那一件事 -->
+  <!-- 那一件事 -->
   <div class="section animate-in" style="animation-delay:.05s">
     <div class="section-header">
       <div class="section-title"><span>🎯</span>今日那一件事</div>
-      <div class="section-badge" id="today-dow-badge">周一</div>
+      <div class="section-badge" id="week-type-badge">产品周</div>
     </div>
     <div class="section-body">
-      <div class="main-task-card">
-        <div class="main-task-name" id="main-task-name">写1条小红书引流笔记</div>
-        <div class="main-task-meta" id="main-task-meta">⏱️ 番茄钟25+5 · 30分钟</div>
-        <div class="main-task-trigger" id="main-task-trigger">⚡ 触发器：送娃进园→直接进书房→打开电脑</div>
-        <div class="main-task-btns">
-          <button class="main-task-btn done-btn" id="btn-main-done" onclick="toggleMainState('done')">✓ 完成</button>
-          <button class="main-task-btn star-btn" id="btn-main-star" onclick="toggleMainState('star')">☆ 超额完成</button>
+      <div class="week-phase" id="phase-box">
+        <div>
+          <div class="week-phase-week" id="phase-label">产品周 · DAY 1/7</div>
+          <div class="week-phase-name" id="phase-task">改详情页</div>
+          <div class="week-phase-goal" id="phase-hint">一件事做完，今天就赢了</div>
         </div>
+        <div style="text-align:right">
+          <div class="week-phase-prog" id="phase-prog">1/7</div>
+          <div class="week-phase-prog-label">TODAY</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="ex-btn done-btn" onclick="setBiz('done')" style="flex:1;padding:12px" id="btn-biz-done">✓ 完成</button>
+        <button class="ex-btn star-btn" onclick="setBiz('star')" style="flex:1;padding:12px" id="btn-biz-star">☆ 超额</button>
       </div>
     </div>
   </div>
 
-  <!-- 三条红线 -->
+  <!-- 锚点日记 -->
   <div class="section animate-in" style="animation-delay:.1s">
-    <div class="section-header">
-      <div class="section-title"><span>🚨</span>三条红线 · 今日</div>
-      <div class="section-badge">底线守卫</div>
-    </div>
-    <div class="section-body">
-      <div class="check-item" id="check-body" onclick="toggleCheck(this,'redBody')">
-        <div class="check-box"><div class="check-box-inner">✓</div></div>
-        <div class="check-text">
-          <div class="check-label">🏃 身体红线</div>
-          <div class="check-sub" id="body-red-sub">今日运动计划</div>
-        </div>
-      </div>
-      <div class="check-item" id="check-parent" onclick="toggleCheck(this,'redParent')">
-        <div class="check-box"><div class="check-box-inner">✓</div></div>
-        <div class="check-text">
-          <div class="check-label">👶 育儿红线</div>
-          <div class="check-sub" id="parent-red-sub">扁平足训练陪做</div>
-        </div>
-      </div>
-      <div class="check-item" id="check-learn" onclick="toggleCheck(this,'redLearn')">
-        <div class="check-box"><div class="check-box-inner">✓</div></div>
-        <div class="check-text">
-          <div class="check-label">📚 学习红线</div>
-          <div class="check-sub">接娃路上听播客15分钟</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 今日状态 -->
-  <div class="section animate-in" style="animation-delay:.15s">
-    <div class="section-header">
-      <div class="section-title"><span>💫</span>今日状态</div>
-    </div>
-    <div class="section-body">
-      <div style="font-size:11px;color:var(--gray);margin-bottom:6px;letter-spacing:.5px">心情速写</div>
-      <div class="emotion-row">
-        <div class="emotion-chip" data-mood="anxious" onclick="selectMood(this)">😤 焦虑</div>
-        <div class="emotion-chip" data-mood="tired" onclick="selectMood(this)">😴 疲惫</div>
-        <div class="emotion-chip" data-mood="okay" onclick="selectMood(this)">😊 还好</div>
-        <div class="emotion-chip" data-mood="online" onclick="selectMood(this)">⚡ 在线</div>
-        <div class="emotion-chip" data-mood="fire" onclick="selectMood(this)">🔥 超燃</div>
-      </div>
-      <div class="divider"></div>
-      <div class="hunger-row" style="margin-top:4px">
-        <div class="hunger-label" style="width:44px;font-size:11px;color:var(--gray)">精力值</div>
-        <input type="range" class="hunger-slider" id="energy-slider" min="1" max="5" value="3"
-          oninput="document.getElementById('energy-val').textContent=this.value;autoSave()">
-        <div class="hunger-val" id="energy-val">3</div>
-      </div>
-      <div style="font-size:10px;color:var(--gray);margin-top:3px">1油尽灯枯 · 3正常 · 5战神状态</div>
-    </div>
-  </div>
-
-  <button class="crash-btn" onclick="openCrash()">🚨 要崩了 · 先接住自己</button>
-</div>
-
-<!-- ───── 地图 ───── -->
-<div class="page" id="page-map">
-  <div class="identity-box animate-in">
-    <div class="identity-label">我现在在哪里</div>
-    <div class="identity-text">「副业起步期 · 25年12月起号<br>正在打基础，时间在我这边」</div>
-  </div>
-
-  <div class="proj-card animate-in" style="animation-delay:.05s">
-    <div class="proj-name">🎯 副业 · 小红书变现</div>
-    <span class="proj-phase-badge" style="background:var(--pink-pale);color:var(--pink-dark)">当前：引流期</span>
-    <div class="proj-status">状态：打基础，每周稳定产出笔记</div>
-    <div class="proj-milestone">→ 下个里程碑：100粉丝</div>
-  </div>
-
-  <div class="proj-card animate-in" style="animation-delay:.08s">
-    <div class="proj-name">🏃 身体 · 母子改造</div>
-    <span class="proj-phase-badge" id="body-week-badge" style="background:#F5F5F5;color:var(--gray)">当前：执行中</span>
-    <div class="proj-status">状态：执行中，按计划推进</div>
-    <div class="proj-milestone">→ 里程碑：完成28天</div>
-  </div>
-
-  <div class="proj-card animate-in" style="animation-delay:.11s">
-    <div class="proj-name">👶 育儿 · 炮儿扁平足</div>
-    <span class="proj-phase-badge" style="background:#FFF8E1;color:#B8860B">当前：习惯养成期</span>
-    <div class="proj-status">状态：每周2次，坚持配合</div>
-    <div class="proj-milestone">→ 里程碑：3个月复查</div>
-  </div>
-
-  <div class="proj-card animate-in" style="animation-delay:.14s">
-    <div class="proj-name">🤖 操作系统 · AI工具</div>
-    <span class="proj-phase-badge" style="background:#EEF2FF;color:#4F46E5">当前：搭建期</span>
-    <div class="proj-status">状态：Claude日常用，融入工作流</div>
-    <div class="proj-milestone">→ 里程碑：SOP文档化</div>
-  </div>
-
-  <div class="proj-card animate-in" style="animation-delay:.17s">
-    <div class="proj-name">📚 学习 · 内容能力</div>
-    <span class="proj-phase-badge" style="background:#F0FDF4;color:#16A34A">当前：输入期</span>
-    <div class="proj-status">状态：每日播客，持续积累</div>
-    <div class="proj-milestone">→ 里程碑：输出10篇深度文</div>
-  </div>
-
-  <div class="section animate-in" style="animation-delay:.2s">
-    <div class="section-body">
-      <div class="tip-text">焦虑时看这里：5个项目都在推进，只是时间问题。先专注今天那一件事。</div>
-    </div>
-  </div>
-</div>
-
-<!-- ───── 捕手 ───── -->
-<div class="page" id="page-capture">
-  <div class="section animate-in">
-    <div class="section-header">
-      <div class="section-title"><span>⚡</span>闪念捕手</div>
-      <div class="section-badge">快速清空大脑</div>
-    </div>
-    <div class="section-body">
-      <div style="font-size:11px;color:var(--gray);margin-bottom:8px;letter-spacing:.5px">选一个情境</div>
-      <div class="ctx-row" id="ctx-row">
-        <div class="ctx-chip" onclick="selectCtx(this,'刷手机中')">📱 刷手机中</div>
-        <div class="ctx-chip" onclick="selectCtx(this,'突发灵感')">💭 突发灵感</div>
-        <div class="ctx-chip" onclick="selectCtx(this,'被打断')">😤 被打断</div>
-        <div class="ctx-chip" onclick="selectCtx(this,'待确认')">🤔 待确认</div>
-        <div class="ctx-chip" onclick="selectCtx(this,'要买的')">🛒 要买的</div>
-      </div>
-      <textarea class="mini-input" id="capture-input" rows="4"
-        placeholder="现在脑子里在想什么？倒出来，然后回去干活。" style="margin-top:4px"></textarea>
-      <button style="width:100%;background:var(--black);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:13px;cursor:pointer;margin-top:10px"
-        onclick="saveCapture()">清空大脑 · 继续专注</button>
-      <div class="tip-text" style="margin-top:8px">脑子里的"待办"会消耗注意力。倒出来就能专注。</div>
-    </div>
-  </div>
-
-  <div class="section animate-in" style="animation-delay:.1s">
-    <div class="section-header">
-      <div class="section-title"><span>📋</span>今日捕获</div>
-      <div class="section-badge" id="capture-count-badge">0条</div>
-    </div>
-    <div class="section-body" id="capture-list">
-      <div class="tip-text">今天还没有捕获，保持专注！</div>
-    </div>
-  </div>
-</div>
-
-<!-- ───── 日记 ───── -->
-<div class="page" id="page-journal">
-  <div class="section animate-in">
     <div class="section-header">
       <div class="section-title"><span>📝</span>今日锚点</div>
-      <div class="section-badge" id="journal-date-badge">今天</div>
+      <div class="section-badge" id="anchor-count">0字</div>
     </div>
     <div class="section-body">
-      <textarea class="mini-input" id="anchor-input" rows="4"
-        placeholder="今天一句话记录…" oninput="updateCharCount();autoSave()"></textarea>
-      <div class="char-count" id="char-count">0 字</div>
+      <textarea class="mini-input" id="input-anchor" rows="3" placeholder="今天一句话，写下就走…" oninput="autoSave()"></textarea>
+      <div class="tip-text" style="margin-top:4px">你每天的底线 · 一句话就够 · 崩盘防线</div>
     </div>
   </div>
 
-  <div class="section animate-in" style="animation-delay:.1s">
-    <div class="section-header">
-      <div class="section-title"><span>🌟</span>今日小赢</div>
-    </div>
-    <div class="section-body">
-      <input class="mini-input" id="win-input"
-        placeholder="今天完成了什么？（哪怕只做了1件小事）" oninput="autoSave()">
-    </div>
-  </div>
-
+  <!-- 身心微打卡 -->
   <div class="section animate-in" style="animation-delay:.15s">
     <div class="section-header">
-      <div class="section-title"><span>🔁</span>本周回顾</div>
-      <div class="section-badge" id="review-badge">周五晚才开放</div>
+      <div class="section-title"><span>🫀</span>身心微打卡</div>
+      <div class="section-badge">可选</div>
     </div>
-    <div class="section-body" id="review-body">
-      <div class="tip-text">每周五晚或周日才开放，现在先专注今天。</div>
+    <div class="section-body">
+      <div style="font-size:11px;color:var(--gray);margin-bottom:8px;letter-spacing:.5px">饱腹度</div>
+      <div class="hunger-row">
+        <div class="hunger-label">午餐</div>
+        <input type="range" class="hunger-slider" id="hunger-lunch" min="9" max="13" value="10" oninput="document.getElementById('hunger-lunch-val').textContent=this.value;autoSave()">
+        <div class="hunger-val" id="hunger-lunch-val">10</div>
+      </div>
+      <div class="hunger-row">
+        <div class="hunger-label">晚餐</div>
+        <input type="range" class="hunger-slider" id="hunger-dinner" min="9" max="13" value="10" oninput="document.getElementById('hunger-dinner-val').textContent=this.value;autoSave()">
+        <div class="hunger-val" id="hunger-dinner-val">10</div>
+      </div>
+      <div style="font-size:10px;color:var(--gray);margin-top:3px">9差不多 · 10刚好 · 11有点撑 · 12很撑 · 13难受</div>
+      <div class="divider"></div>
+      <div class="check-item" id="check-leave" onclick="toggleCheck(this,'leave')">
+        <div class="check-box"><div class="check-box-inner">✓</div></div>
+        <div class="check-text">
+          <div class="check-label">S · 剩一口</div>
+          <div class="check-sub">任意一餐剩下任意一口即完成</div>
+        </div>
+      </div>
+      <div class="check-item" id="check-exercise" onclick="toggleCheck(this,'exercise')">
+        <div class="check-box"><div class="check-box-inner">✓</div></div>
+        <div class="check-text">
+          <div class="check-label">今日运动</div>
+          <div class="check-sub">走路/跳操/任何身体活动</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:11px;color:var(--gray);margin-bottom:6px;letter-spacing:.5px">情绪</div>
+      <div class="emotion-row" id="emotion-row">
+        <div class="emotion-chip" onclick="selEmotion(this)">😊还好</div>
+        <div class="emotion-chip" onclick="selEmotion(this)">😴疲惫</div>
+        <div class="emotion-chip" onclick="selEmotion(this)">😤焦虑</div>
+        <div class="emotion-chip" onclick="selEmotion(this)">⚡在线</div>
+        <div class="emotion-chip" onclick="selEmotion(this)">🔥超燃</div>
+      </div>
     </div>
+  </div>
+
+  <!-- 周任务 -->
+  <div class="section animate-in" style="animation-delay:.2s" id="weekly-section">
+    <div class="section-header">
+      <div class="section-title"><span>📅</span>本周任务</div>
+      <div class="section-badge" id="weekly-badge">0/2</div>
+    </div>
+    <div class="section-body" id="weekly-body">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <!-- 崩溃按钮 -->
+  <button class="crash-btn" onclick="openCrash()">🚨 要崩了？点这里</button>
+</div>
+
+<!-- ====== Tab 2: 全景 ====== -->
+<div class="page" id="page-map">
+  <div class="section animate-in">
+    <div class="section-header">
+      <div class="section-title"><span>💼</span>副业全景</div>
+    </div>
+    <div class="section-body">
+      <div class="data-grid" id="biz-stats"></div>
+      <div class="prog-row"><div class="prog-label">本周进度</div><div class="prog-bar"><div class="prog-fill biz" id="prog-biz" style="width:0%"></div></div><div class="prog-pct" id="prog-biz-pct">0%</div></div>
+    </div>
+  </div>
+  <div class="section animate-in" style="animation-delay:.05s">
+    <div class="section-header">
+      <div class="section-title"><span>🫀</span>身心打卡</div>
+    </div>
+    <div class="section-body">
+      <div class="prog-row"><div class="prog-label">打卡天数</div><div class="prog-bar"><div class="prog-fill body" id="prog-body" style="width:0%"></div></div><div class="prog-pct" id="prog-body-pct">0%</div></div>
+    </div>
+  </div>
+  <div class="section animate-in" style="animation-delay:.1s">
+    <div class="section-header">
+      <div class="section-title"><span>👶</span>小朋友</div>
+    </div>
+    <div class="section-body">
+      <div class="tip-text">扁平足训练 · 本周完成 <span id="flatfoot-count">0</span>/2 次</div>
+    </div>
+  </div>
+  <div class="section animate-in" style="animation-delay:.15s">
+    <div class="section-header">
+      <div class="section-title"><span>📅</span>28天总览</div>
+      <div class="section-badge" id="gantt-badge">Week 1</div>
+    </div>
+    <div class="section-body">
+      <div class="gantt-wrap"><div class="gantt" id="gantt-main"></div></div>
+      <div class="gantt-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--black)"></div>副业任务</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--pink-deep)"></div>日记锚点</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div>身心打卡</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#B8D4C8"></div>周任务</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#F5DEB3"></div>暴食记录</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--pink-pale);border:1px solid var(--pink-border)"></div>情绪标注</div>
+      </div>
+    </div>
+  </div>
+  <div class="identity-box animate-in" style="animation-delay:.2s">
+    <div class="identity-label">每周日刷新</div>
+    <div class="identity-text">「产品在做，账号在养，身体在练。<br>都在推进，只是时间问题。」</div>
   </div>
 </div>
 
-<!-- ───── 数据 ───── -->
-<div class="page" id="page-data">
-  <div class="data-grid animate-in">
-    <div class="data-card pink">
-      <div class="data-card-num" id="data-streak">0<span>天</span></div>
-      <div class="data-card-label">连续打卡</div>
+<!-- ====== Tab 3: 急救 ====== -->
+<div class="page" id="page-crash">
+  <div class="section animate-in">
+    <div class="section-header">
+      <div class="section-title"><span>🚨</span>你现在什么状态？</div>
     </div>
-    <div class="data-card">
-      <div class="data-card-num" id="data-week-done">0<span>件</span></div>
-      <div class="data-card-label">本周完成</div>
-    </div>
-    <div class="data-card">
-      <div class="data-card-num" id="data-redline-pct">0<span>%</span></div>
-      <div class="data-card-label">红线完成率</div>
-    </div>
-    <div class="data-card">
-      <div class="data-card-num" id="data-captures">0<span>条</span></div>
-      <div class="data-card-label">闪念捕获</div>
+    <div class="section-body">
+      <div class="modal-actions" style="margin:0">
+        <div class="modal-action" onclick="alert('念出来：我只做2分钟，2分钟后想停就停。打开今日页，做最小一步就算赢。99%你会自然做下去。')">
+          <div class="modal-action-title">😩 完全不想动</div>
+          <div class="modal-action-sub">2分钟法则 · 念出来做最小一步</div>
+        </div>
+        <div class="modal-action" onclick="alert('今天目标缩到：打开手机。连"打开"这个动作都是赢。不要内疚，明天再说。')">
+          <div class="modal-action-title">😭 要崩了</div>
+          <div class="modal-action-sub">极限缩小 · 目标缩到做不到都难</div>
+        </div>
+        <div class="modal-action" onclick="alert('连续掉链子不是失败，连续不重启才是失败。不回顾，不做计划，直接做明天的那一步。哪怕缩小到极致版。')">
+          <div class="modal-action-title">🔄 连续3天没动</div>
+          <div class="modal-action-sub">最小重启 · 不回顾直接做下一步</div>
+        </div>
+        <div class="modal-action" onclick="alert('写给将来某天崩溃的碳碳：\\n\\n你现在读到这里，说明你正经历低谷。\\n\\n但你以前也经历过，然后活过来了。\\n\\n你不是第一次面对这个，也不会是最后一次。\\n\\n你可以休息，但不要消失。')">
+          <div class="modal-action-title">📖 读崩溃信</div>
+          <div class="modal-action-sub">写给将来某天崩溃的你</div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="identity-box animate-in" style="animation-delay:.1s">
+    <div class="identity-label">记住这句话</div>
+    <div class="identity-text">「我不靠爆款，靠不停。」</div>
+  </div>
+</div>
 
+<!-- ====== Tab 4: 补货 ====== -->
+<div class="page" id="page-craving">
+  <div class="section animate-in">
+    <div class="section-header">
+      <div class="section-title"><span>📦</span>暴食冲动记录</div>
+      <div class="section-badge">刻意练习</div>
+    </div>
+    <div class="section-body">
+      <div style="font-size:12px;color:var(--black2);margin-bottom:4px">时间</div>
+      <input class="mini-input" id="craving-time" placeholder="15:47" type="time">
+      <div style="font-size:12px;color:var(--black2);margin:8px 0 4px">情境</div>
+      <input class="mini-input" id="craving-context" placeholder="刚吃完午饭，坐在沙发上…">
+      <div style="font-size:12px;color:var(--black2);margin:8px 0 4px">情绪</div>
+      <div class="emotion-row" id="craving-emotions">
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">😤焦虑</div>
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">😔委屈</div>
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">😴疲惫</div>
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">😶无聊</div>
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">🥺孤独</div>
+        <div class="emotion-chip" onclick="this.classList.toggle('active')">😤压力</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:11px;color:var(--gray);margin-bottom:8px;letter-spacing:.5px">选一个替代行动</div>
+      <div class="alt-actions">
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🎵听一首歌</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🚶快走5分钟</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">💧喝温水</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🧘腹式呼吸</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">📱发条语音</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🗂️整理抽屉</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🙆肩颈拉伸</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">📝感恩速写</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🏃爬楼梯</div>
+        <div class="alt-btn" onclick="this.classList.toggle('selected')">🦶单脚站立</div>
+      </div>
+      <button style="width:100%;background:var(--black);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:13px;cursor:pointer;margin-top:12px" onclick="saveCraving()">保存记录</button>
+    </div>
+  </div>
   <div class="section animate-in" style="animation-delay:.1s">
-    <div class="section-header"><div class="section-title"><span>📈</span>本周进度</div></div>
+    <div class="section-header"><div class="section-title"><span>📊</span>本周暴食模式</div></div>
     <div class="section-body">
-      <div class="prog-row">
-        <div class="prog-label">副业任务</div>
-        <div class="prog-bar"><div class="prog-fill ex" id="prog-work" style="width:0%"></div></div>
-        <div class="prog-pct" id="prog-work-pct">0/5</div>
-      </div>
-      <div class="prog-row">
-        <div class="prog-label">身体红线</div>
-        <div class="prog-bar"><div class="prog-fill diet" id="prog-body" style="width:0%"></div></div>
-        <div class="prog-pct" id="prog-body-pct">0/3</div>
-      </div>
-      <div class="prog-row">
-        <div class="prog-label">学习红线</div>
-        <div class="prog-bar"><div class="prog-fill mood" id="prog-learn" style="width:0%"></div></div>
-        <div class="prog-pct" id="prog-learn-pct">0/5</div>
+      <div id="craving-pattern">
+        <div style="font-size:11px;color:var(--gray);margin-bottom:8px">高发时段</div>
+        <div style="display:flex;gap:4px"><div style="flex:1;text-align:center;font-size:10px;color:var(--gray)">上午</div><div style="flex:1;text-align:center;font-size:10px;color:var(--gray)">中午</div><div style="flex:1;text-align:center;font-size:10px;color:var(--pink-deep);font-weight:700">下午 ↑</div><div style="flex:1;text-align:center;font-size:10px;color:var(--gray)">晚上</div></div>
+        <div style="display:flex;gap:4px;margin-top:4px;align-items:flex-end;height:48px">
+          <div style="flex:1;background:var(--gray-light);border-radius:3px 3px 0 0;height:20%"></div>
+          <div style="flex:1;background:var(--gray-light);border-radius:3px 3px 0 0;height:35%"></div>
+          <div style="flex:1;background:var(--pink-deep);border-radius:3px 3px 0 0;height:100%"></div>
+          <div style="flex:1;background:var(--gray-light);border-radius:3px 3px 0 0;height:45%"></div>
+        </div>
+        <div class="tip-text" style="margin-top:8px">记录7天后自动分析你的暴食规律</div>
       </div>
     </div>
   </div>
-
   <div class="section animate-in" style="animation-delay:.15s">
-    <div class="section-header"><div class="section-title"><span>⚙️</span>设置</div></div>
+    <div class="section-header"><div class="section-title"><span>📝</span>今日情绪日记</div></div>
     <div class="section-body">
-      <div style="font-size:12px;color:var(--gray);margin-bottom:8px">驾驶舱开始日期</div>
-      <input type="date" class="mini-input" id="settings-date" onchange="changeStartDate()">
-      <div style="font-size:11px;color:var(--gray);margin-top:8px">修改开始日期后，Day数会自动重新计算</div>
+      <textarea class="mini-input" id="input-journal" rows="4" placeholder="今天的情绪波动和想法，写下来…" oninput="autoSave()"></textarea>
     </div>
   </div>
 </div>
@@ -415,144 +422,117 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">崩了没关系</div>
-    <div class="modal-sub">连续掉链子不是失败，连续不重启才是失败。<br>现在只做一件事就够了。</div>
+    <div class="modal-sub">连续掉链子不是失败，连续不重启才是失败</div>
     <div class="modal-actions">
-      <div class="modal-action">
-        <div class="modal-action-title">🎯 只做2分钟，做完就停</div>
-        <div class="modal-action-sub">打开文档，写一个字，今天就算赢了</div>
-      </div>
-      <div class="modal-action">
-        <div class="modal-action-title">📱 把今天目标缩小到：打开手机</div>
-        <div class="modal-action-sub">最小行动，打破停滞感</div>
-      </div>
-      <div class="modal-action">
-        <div class="modal-action-title">💧 先喝一杯水，5分钟后再说</div>
-        <div class="modal-action-sub">身体信号重置，重新评估状态</div>
-      </div>
-      <div class="modal-action">
-        <div class="modal-action-title">📝 打开日记页，写一句话</div>
-        <div class="modal-action-sub">记录崩了的感受，本身也是完成</div>
-      </div>
+      <div class="modal-action"><div class="modal-action-title">🎯 2分钟法则</div><div class="modal-action-sub">念出来："我只做2分钟，做完就停"</div></div>
+      <div class="modal-action"><div class="modal-action-title">📱 极限缩小</div><div class="modal-action-sub">今天目标缩到"打开手机"就算赢</div></div>
+      <div class="modal-action"><div class="modal-action-title">💧 先喝一杯水</div><div class="modal-action-sub">打断情绪回路，5分钟后再说</div></div>
+      <div class="modal-action"><div class="modal-action-title">📖 读崩溃信</div><div class="modal-action-sub">写给将来某天崩溃的你</div></div>
     </div>
     <button class="modal-close" onclick="closeCrash()">关闭</button>
   </div>
 </div>
 
-<!-- 底部导航 -->
+<!-- NAV -->
 <nav class="nav">
-  <button class="nav-item active" onclick="switchPage('today',this)">
-    <span class="nav-icon">✓</span><span class="nav-label">今日</span>
-  </button>
-  <button class="nav-item" onclick="switchPage('map',this)">
-    <span class="nav-icon">🗺</span><span class="nav-label">地图</span>
-  </button>
-  <button class="nav-item" onclick="switchPage('capture',this);loadCaptures()">
-    <span class="nav-icon">⚡</span><span class="nav-label">捕手</span>
-  </button>
-  <button class="nav-item" onclick="switchPage('journal',this);initJournal()">
-    <span class="nav-icon">📝</span><span class="nav-label">日记</span>
-  </button>
-  <button class="nav-item" onclick="switchPage('data',this);updateStats()">
-    <span class="nav-icon">📊</span><span class="nav-label">数据</span>
-  </button>
+  <button class="nav-item active" onclick="switchPage('today',this)"><span class="nav-icon">✓</span><span class="nav-label">今日</span></button>
+  <button class="nav-item" onclick="switchPage('map',this)"><span class="nav-icon">🗺</span><span class="nav-label">全景</span></button>
+  <button class="nav-item" onclick="switchPage('crash',this)"><span class="nav-icon">🚨</span><span class="nav-label">急救</span></button>
+  <button class="nav-item" onclick="switchPage('craving',this)"><span class="nav-icon">📦</span><span class="nav-label">补货</span></button>
 </nav>
 
 <script>
-// ── 基础工具 ──
+// ── 工具函数 ──
 function today(){return new Date().toISOString().slice(0,10)}
 function daysBetween(a,b){return Math.floor((new Date(b)-new Date(a))/(1000*60*60*24))}
-function getDayNum(){
+function getWeekType(){
+  const start=localStorage.getItem('dashStartDate');
+  if(!start)return'product';
+  const totalDays=daysBetween(start,today())+1;
+  if(totalDays<=0)return 1;
+  const weekNum=Math.ceil(totalDays/7);
+  const startType=localStorage.getItem('dashWeekType')||'product';
+  if(weekNum%2===1)return startType;
+  return startType==='product'?'content':'product';
+}
+function getWeekDay(){
   const start=localStorage.getItem('dashStartDate');
   if(!start)return 1;
   const d=daysBetween(start,today())+1;
-  return Math.max(1,d);
+  return d>0?((d-1)%7)+1:1;
 }
-function getDOW(){return new Date().getDay()} // 0=Sun,1=Mon,...,6=Sat
+function getTotalDay(){
+  const start=localStorage.getItem('dashStartDate');
+  if(!start)return 1;
+  const d=daysBetween(start,today())+1;
+  return d>0?d:1;
+}
 
-// ── 星期名 ──
-const DOW_NAMES=['周日','周一','周二','周三','周四','周五','周六'];
-
-// ── 每日任务配置 ──
-const DAY_TASKS={
-  1:{name:'写1条小红书引流笔记',time:'30分钟',trigger:'⚡ 触发器：送娃进园→直接进书房→打开电脑'},
-  2:{name:'发预存稿 + 回复10条评论',time:'15分钟',trigger:'⚡ 触发器：午饭后坐回椅子→先发稿'},
-  3:{name:'Claude拆选题',time:'30分钟',trigger:'⚡ 触发器：孩子午睡→立即打开Claude'},
-  4:{name:'根据选题写新笔记',time:'30分钟',trigger:'⚡ 触发器：送娃进园→书房→今天写笔记'},
-  5:{name:'30分钟周复盘',time:'30分钟',trigger:'⚡ 触发器：周五下班后→先复盘再休息'},
-  6:{name:'🌸 强制留白 · 不工作',time:'全天',trigger:'今天不碰工作，充电也是生产力'},
-  0:{name:'21:00 重启仪式',time:'15分钟',trigger:'⚡ 触发器：孩子入睡→泡茶→拿出本子'}
+// ── 管道数据 ──
+const pipelines={
+  product:['改详情页','交付优化','运营埋点（找人购买+写评论）','上架','冷启动','🌸 留白','🌸 留白'],
+  content:['刷选题（大量输入）','沉淀选题（筛选归类）','批量写稿（目标3-5条）','继续写稿（补完文稿）','设计图文（批量出图）','定时发布+存稿','🌸 留白']
 };
+const weekNames={product:'产品周',content:'内容周'};
 
-// ── 身体/育儿红线动态文案 ──
-function getBodyRedSub(){
-  const m={1:'今日：晨间拉伸10分钟',2:'今日：陪娃户外运动30分钟',
-            3:'今日：晨间拉伸10分钟',4:'今日：陪娃户外运动30分钟',
-            5:'今日：晨间拉伸10分钟',6:'今日：家庭户外活动',0:'今日：休息 / 轻度拉伸'};
-  return m[getDOW()]||'今日运动计划';
-}
-function getParentRedSub(){
-  return [2,4,6].includes(getDOW())?'今日：扁平足训练（需陪做）':'今日：常规陪伴即可';
+// ── 周任务 ──
+function getWeeklyTasks(dow){
+  const tasks=[];
+  if(dow===2)tasks.push({name:'扁平足训练',sub:'踮脚刷牙3分钟 / 用脚抓毛巾',key:'flatfootDone'});
+  if(dow===4)tasks.push({name:'扁平足训练',sub:'踮脚刷牙3分钟 / 用脚抓毛巾',key:'flatfootDone'});
+  if(dow===0)tasks.push({name:'周日复盘',sub:'知识库复盘 + 本周检阅',key:'reviewDone'});
+  return tasks;
 }
 
-// ── localStorage keys ──
+// ── 本地存储 ──
 function todayKey(){return 'dash_'+today()}
-function captureKey(){return 'captures_'+today()}
 
-// ── 自动保存（800ms防抖）──
+// ── 自动保存 ──
 let saveTimer=null;
 function autoSave(){
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
-    saveTodayData();
+    const data=collectData();
+    localStorage.setItem(todayKey(),JSON.stringify(data));
+    updateAnchorCount();
     showToast('已自动保存 ✓');
   },800);
 }
-
-function saveTodayData(){
-  const weekWinEl=document.getElementById('weekWin-input');
-  const weekCrashEl=document.getElementById('weekCrash-input');
-  const weekNextEl=document.getElementById('weekNext-input');
-  const data={
-    mainDone:mainState==='done',
-    mainStar:mainState==='star',
-    redBody:document.getElementById('check-body').classList.contains('done'),
-    redParent:document.getElementById('check-parent').classList.contains('done'),
-    redLearn:document.getElementById('check-learn').classList.contains('done'),
-    mood:currentMood,
-    energy:document.getElementById('energy-slider').value,
-    anchor:document.getElementById('anchor-input').value,
-    win:document.getElementById('win-input').value,
-    weekWin:weekWinEl?weekWinEl.value:'',
-    weekCrash:weekCrashEl?weekCrashEl.value:'',
-    weekNext:weekNextEl?weekNextEl.value:''
+function collectData(){
+  return {
+    bizDone:!!document.querySelector('#phase-box .biz-done'),
+    bizStar:!!document.querySelector('#phase-box .biz-star'),
+    anchor:document.getElementById('input-anchor').value,
+    hungerLunch:document.getElementById('hunger-lunch').value,
+    hungerDinner:document.getElementById('hunger-dinner').value,
+    leaveDone:document.getElementById('check-leave').classList.contains('done'),
+    exerciseDone:document.getElementById('check-exercise').classList.contains('done'),
+    emotion:document.querySelector('.emotion-chip.sel')?.textContent||'',
+    flatfootDone:document.getElementById('check-flatfoot')?.classList.contains('done')||false,
+    reviewDone:document.getElementById('check-review')?.classList.contains('done')||false,
+    journal:document.getElementById('input-journal').value,
   };
-  localStorage.setItem(todayKey(),JSON.stringify(data));
 }
 
+// ── 加载今日数据 ──
 function loadTodayData(){
   const raw=localStorage.getItem(todayKey());
   if(!raw)return;
   const d=JSON.parse(raw);
-  if(d.mainDone){mainState='done';applyMainState();}
-  if(d.mainStar){mainState='star';applyMainState();}
-  if(d.redBody)document.getElementById('check-body').classList.add('done');
-  if(d.redParent)document.getElementById('check-parent').classList.add('done');
-  if(d.redLearn)document.getElementById('check-learn').classList.add('done');
-  if(d.mood){
-    currentMood=d.mood;
-    document.querySelectorAll('.emotion-chip').forEach(c=>{
-      if(c.dataset.mood===d.mood)c.classList.add('active');
-    });
+  if(d.bizDone)setBiz('done',false);
+  if(d.bizStar)setBiz('star',false);
+  if(d.anchor)document.getElementById('input-anchor').value=d.anchor;
+  if(d.hungerLunch){document.getElementById('hunger-lunch').value=d.hungerLunch;document.getElementById('hunger-lunch-val').textContent=d.hungerLunch;}
+  if(d.hungerDinner){document.getElementById('hunger-dinner').value=d.hungerDinner;document.getElementById('hunger-dinner-val').textContent=d.hungerDinner;}
+  if(d.leaveDone)document.getElementById('check-leave').classList.add('done');
+  if(d.exerciseDone)document.getElementById('check-exercise').classList.add('done');
+  if(d.emotion){
+    document.querySelectorAll('#emotion-row .emotion-chip').forEach(c=>{if(c.textContent===d.emotion)c.classList.add('sel','active')});
   }
-  if(d.energy){
-    document.getElementById('energy-slider').value=d.energy;
-    document.getElementById('energy-val').textContent=d.energy;
-  }
-  if(d.anchor){
-    document.getElementById('anchor-input').value=d.anchor;
-    updateCharCount();
-  }
-  if(d.win)document.getElementById('win-input').value=d.win;
+  if(d.flatfootDone&&document.getElementById('check-flatfoot'))document.getElementById('check-flatfoot').classList.add('done');
+  if(d.reviewDone&&document.getElementById('check-review'))document.getElementById('check-review').classList.add('done');
+  if(d.journal)document.getElementById('input-journal').value=d.journal;
+  updateAnchorCount();
 }
 
 // ── Toast ──
@@ -568,259 +548,200 @@ function switchPage(id,btn){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
+  if(id==='map')refreshMap();
+  if(id==='craving')refreshCravingPattern();
 }
 
-// ── 主任务状态 ──
-let mainState='';
-function toggleMainState(state){
-  mainState=(mainState===state)?'':state;
-  applyMainState();
+// ── 副业动作 ──
+function setBiz(type,doSave){
+  const box=document.getElementById('phase-box');
+  const btnD=document.getElementById('btn-biz-done');
+  const btnS=document.getElementById('btn-biz-star');
+  box.classList.remove('biz-done','biz-star');
+  btnD.className='ex-btn done-btn';btnS.className='ex-btn star-btn';
+  if(type==='done'){box.classList.add('biz-done');btnD.className='ex-btn done-btn';btnD.style.outline='2px solid var(--pink-deep)';}
+  if(type==='star'){box.classList.add('biz-star');btnS.className='ex-btn star-btn';btnS.style.outline='2px solid var(--black)';}
+  if(doSave!==false)autoSave();
+}
+
+// ── 情绪选择 ──
+function selEmotion(el){
+  document.querySelectorAll('#emotion-row .emotion-chip').forEach(c=>{c.classList.remove('sel','active')});
+  el.classList.add('sel','active');
   autoSave();
 }
-function applyMainState(){
-  document.getElementById('btn-main-done').classList.toggle('active',mainState==='done');
-  document.getElementById('btn-main-star').classList.toggle('active',mainState==='star');
-}
 
-// ── 红线打卡 ──
-function toggleCheck(el){
+// ── 打卡切换 ──
+function toggleCheck(el,key){
   el.classList.toggle('done');
   autoSave();
 }
 
-// ── 心情选择 ──
-let currentMood='';
-function selectMood(el){
-  const mood=el.dataset.mood;
-  document.querySelectorAll('.emotion-chip').forEach(c=>c.classList.remove('active'));
-  if(currentMood===mood){currentMood='';}
-  else{currentMood=mood;el.classList.add('active');}
-  autoSave();
-}
-
-// ── Crash Modal ──
+// ── 崩溃 ──
 function openCrash(){document.getElementById('crash-modal').classList.add('open')}
 function closeCrash(e){
   if(!e||e.target===document.getElementById('crash-modal'))
     document.getElementById('crash-modal').classList.remove('open');
 }
 
-// ── 捕手 ──
-let selectedCtx='';
-function selectCtx(el,cat){
-  document.querySelectorAll('.ctx-chip').forEach(c=>c.classList.remove('active'));
-  if(selectedCtx===cat){selectedCtx='';}
-  else{selectedCtx=cat;el.classList.add('active');}
+// ── 锚点字数 ──
+function updateAnchorCount(){
+  const v=document.getElementById('input-anchor').value;
+  document.getElementById('anchor-count').textContent=v.length+'字';
 }
 
-function saveCapture(){
-  const text=document.getElementById('capture-input').value.trim();
-  if(!text){showToast('先写点什么再捕获');return;}
-  const now=new Date();
-  const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  const existing=JSON.parse(localStorage.getItem(captureKey())||'[]');
-  existing.unshift({time:timeStr,category:selectedCtx||'待确认',text,ts:Date.now()});
-  localStorage.setItem(captureKey(),JSON.stringify(existing));
-  document.getElementById('capture-input').value='';
-  selectedCtx='';
-  document.querySelectorAll('.ctx-chip').forEach(c=>c.classList.remove('active'));
-  showToast('已捕获，继续专注！✓');
-  loadCaptures();
-}
-
-function loadCaptures(){
-  const list=JSON.parse(localStorage.getItem(captureKey())||'[]');
-  const badge=document.getElementById('capture-count-badge');
-  const container=document.getElementById('capture-list');
-  badge.textContent=list.length+'条';
-  if(list.length===0){
-    container.innerHTML='<div class="tip-text">今天还没有捕获，保持专注！</div>';
-    return;
-  }
-  container.innerHTML=list.map((item,i)=>`
-    <div class="capture-item">
-      <div class="capture-item-head">
-        <span class="capture-time">${item.time}</span>
-        <span class="capture-cat">${item.category}</span>
-        <span class="capture-del" onclick="deleteCapture(${i})">✕ 删</span>
-      </div>
-      <div class="capture-text">${item.text}</div>
-    </div>
-  `).join('');
-}
-
-function deleteCapture(i){
-  const list=JSON.parse(localStorage.getItem(captureKey())||'[]');
-  list.splice(i,1);
-  localStorage.setItem(captureKey(),JSON.stringify(list));
-  loadCaptures();
-  showToast('已删除');
-}
-
-// ── 日记 ──
-function updateCharCount(){
-  const v=document.getElementById('anchor-input').value;
-  document.getElementById('char-count').textContent=v.length+' 字';
-}
-
-function initJournal(){
-  const now=new Date();
-  const dateStr=now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日';
-  document.getElementById('journal-date-badge').textContent=dateStr;
-  updateCharCount();
-  const dow=getDOW();
-  const isReviewDay=(dow===5||dow===0);
-  const reviewBadge=document.getElementById('review-badge');
-  const reviewBody=document.getElementById('review-body');
-  if(isReviewDay){
-    reviewBadge.textContent='本周回顾';
-    const raw=localStorage.getItem(todayKey());
-    const saved=raw?JSON.parse(raw):{};
-    reviewBody.innerHTML=`
-      <div class="review-block">
-        <div class="review-block-label">本周1个赢</div>
-        <input class="mini-input" id="weekWin-input" placeholder="本周做到了什么？" oninput="autoSave()" value="${escHtml(saved.weekWin||'')}">
-      </div>
-      <div class="review-block">
-        <div class="review-block-label">本周1个崩</div>
-        <input class="mini-input" id="weekCrash-input" placeholder="本周哪里掉链子了？" oninput="autoSave()" value="${escHtml(saved.weekCrash||'')}">
-      </div>
-      <div class="review-block">
-        <div class="review-block-label">下周那一件事</div>
-        <input class="mini-input" id="weekNext-input" placeholder="下周最重要的一件事是？" oninput="autoSave()" value="${escHtml(saved.weekNext||'')}">
-      </div>
-    `;
-  } else {
-    reviewBadge.textContent='周五晚才开放';
-    reviewBody.innerHTML='<div class="tip-text">每周五晚或周日才开放，现在先专注今天。</div>';
-  }
-}
-
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-// ── 统计 ──
-function calcStreak(){
-  let streak=0;
-  const dt=new Date();
-  for(let i=0;i<365;i++){
-    const d=new Date(dt);
-    d.setDate(d.getDate()-i);
-    const key='dash_'+d.toISOString().slice(0,10);
-    const raw=localStorage.getItem(key);
-    if(!raw)break;
-    const data=JSON.parse(raw);
-    if(data.mainDone||data.mainStar){streak++;}
-    else break;
-  }
-  return streak;
-}
-
-function getWeekDates(){
-  const dt=new Date();
-  const dow=dt.getDay();
-  const monday=new Date(dt);
-  monday.setDate(dt.getDate()-(dow===0?6:dow-1));
-  const dates=[];
-  for(let i=0;i<7;i++){
-    const d=new Date(monday);
-    d.setDate(monday.getDate()+i);
-    dates.push(d.toISOString().slice(0,10));
-  }
-  return dates;
-}
-
-function updateStats(){
-  const streak=calcStreak();
-  document.getElementById('data-streak').innerHTML=streak+'<span>天</span>';
-  document.getElementById('streak-num').textContent=streak;
-
-  const weekDates=getWeekDates();
-  let weekDone=0,bodyDone=0,parentDone=0,learnDone=0,doneRedline=0,totalRedline=0,totalCaptures=0;
-
-  weekDates.forEach(dateStr=>{
-    const raw=localStorage.getItem('dash_'+dateStr);
-    const caps=JSON.parse(localStorage.getItem('captures_'+dateStr)||'[]');
-    totalCaptures+=caps.length;
-    if(!raw)return;
-    const d=JSON.parse(raw);
-    if(d.mainDone||d.mainStar)weekDone++;
-    totalRedline+=3;
-    if(d.redBody){bodyDone++;doneRedline++;}
-    if(d.redParent){parentDone++;doneRedline++;}
-    if(d.redLearn){learnDone++;doneRedline++;}
-  });
-
-  const pct=totalRedline>0?Math.round(doneRedline/totalRedline*100):0;
-  document.getElementById('data-week-done').innerHTML=weekDone+'<span>件</span>';
-  document.getElementById('data-redline-pct').innerHTML=pct+'<span>%</span>';
-  document.getElementById('data-captures').innerHTML=totalCaptures+'<span>条</span>';
-
-  const wPct=Math.min(100,Math.round(weekDone/5*100));
-  const bPct=Math.min(100,Math.round(bodyDone/3*100));
-  const lPct=Math.min(100,Math.round(learnDone/5*100));
-  document.getElementById('prog-work').style.width=wPct+'%';
-  document.getElementById('prog-work-pct').textContent=weekDone+'/5';
-  document.getElementById('prog-body').style.width=bPct+'%';
-  document.getElementById('prog-body-pct').textContent=bodyDone+'/3';
-  document.getElementById('prog-learn').style.width=lPct+'%';
-  document.getElementById('prog-learn-pct').textContent=learnDone+'/5';
+// ── 渴望保存 ──
+function saveCraving(){
+  const t=document.getElementById('craving-time').value;
+  const ctx=document.getElementById('craving-context').value;
+  const emotions=Array.from(document.querySelectorAll('#craving-emotions .emotion-chip.active')).map(e=>e.textContent);
+  const actions=Array.from(document.querySelectorAll('.alt-actions .alt-btn.selected')).map(a=>a.textContent);
+  const key='cravings_'+today();
+  const existing=JSON.parse(localStorage.getItem(key)||'[]');
+  existing.push({time:t,context:ctx,emotions,actions,ts:Date.now()});
+  localStorage.setItem(key,JSON.stringify(existing));
+  showToast('暴食记录已保存 ✓');
+  document.getElementById('craving-time').value='';
+  document.getElementById('craving-context').value='';
+  document.querySelectorAll('#craving-emotions .emotion-chip').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.alt-actions .alt-btn').forEach(a=>a.classList.remove('selected'));
 }
 
 // ── 设置 ──
+function selectWeekType(type){
+  document.getElementById('wt-product').className=type==='product'?'active':'';
+  document.getElementById('wt-content').className=type==='content'?'active':'';
+}
 function saveSetup(){
   const d=document.getElementById('setup-date').value;
   if(!d)return;
+  const wt=document.getElementById('wt-product').classList.contains('active')?'product':'content';
   localStorage.setItem('dashStartDate',d);
+  localStorage.setItem('dashWeekType',wt);
   document.getElementById('setup-overlay').classList.remove('open');
-  updateHeader();
-  loadTodayData();
-  loadCaptures();
-  const sd=document.getElementById('settings-date');
-  if(sd)sd.value=d;
-}
-
-function changeStartDate(){
-  const d=document.getElementById('settings-date').value;
-  if(!d)return;
-  localStorage.setItem('dashStartDate',d);
-  updateHeader();
-  showToast('开始日期已更新');
+  updateHeader();buildWeeklySection();loadTodayData();buildGantt();
 }
 
 // ── 更新头部 ──
 function updateHeader(){
-  const dayNum=getDayNum();
-  const dow=getDOW();
-  const dowName=DOW_NAMES[dow];
-  const task=DAY_TASKS[dow]||DAY_TASKS[1];
-
-  document.getElementById('header-day').textContent='DAY '+String(dayNum).padStart(3,'0')+' · '+dowName;
-  document.getElementById('header-title').innerHTML=dowName+'<span>任务</span>';
-  document.getElementById('today-dow-badge').textContent=dowName;
-  document.getElementById('main-task-name').textContent=task.name;
-  document.getElementById('main-task-meta').textContent='⏱️ 番茄钟25+5 · '+task.time;
-  document.getElementById('main-task-trigger').textContent=task.trigger;
-  document.getElementById('body-red-sub').textContent=getBodyRedSub();
-  document.getElementById('parent-red-sub').textContent=getParentRedSub();
-
-  // 地图：身体项目周数
-  const start=localStorage.getItem('dashStartDate');
-  const bodyBadge=document.getElementById('body-week-badge');
-  if(bodyBadge&&start){
-    const bodyDay=daysBetween(start,today())+1;
-    const bodyWeek=Math.max(1,Math.ceil(bodyDay/7));
-    bodyBadge.textContent='当前：Week '+bodyWeek;
-  }
-
-  // 日记日期
-  const now=new Date();
-  const dateStr=now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日';
-  const jb=document.getElementById('journal-date-badge');
-  if(jb)jb.textContent=dateStr;
-
+  const wt=getWeekType();
+  const wd=getWeekDay();
+  const td=getTotalDay();
+  const task=pipelines[wt][wd-1];
+  document.getElementById('header-day').textContent=`DAY ${String(td).padStart(3,'0')} · ${weekNames[wt]}`;
+  document.getElementById('header-title').innerHTML=task+'<span>·'+weekNames[wt]+'</span>';
+  document.getElementById('week-type-badge').textContent=weekNames[wt];
+  document.getElementById('phase-label').textContent=weekNames[wt]+' · DAY '+wd+'/7';
+  document.getElementById('phase-task').textContent=task;
+  document.getElementById('phase-prog').textContent=wd+'/7';
+  document.getElementById('gantt-badge').textContent='Week '+Math.ceil(td/7);
   // streak
-  const streak=calcStreak();
-  document.getElementById('streak-num').textContent=streak;
+  let streak=0;const s=localStorage.getItem('dashStartDate');
+  if(s){let d=new Date();while(true){const k='dash_'+d.toISOString().slice(0,10);const r=JSON.parse(localStorage.getItem(k)||'{}');if(r.bizDone||r.bizStar){streak++;d=new Date(d.getTime()-86400000)}else{if(k!==todayKey())break;else break}}}
+  if(streak===0){const c=localStorage.getItem(todayKey());if(c){const cc=JSON.parse(c);if(cc.bizDone||cc.bizStar)streak=1;}}
+  document.getElementById('streak-num').textContent=Math.max(1,streak);
+}
+
+// ── 周任务区 ──
+function buildWeeklySection(){
+  const jsDow=new Date().getDay();
+  const tasks=getWeeklyTasks(jsDow);
+  const body=document.getElementById('weekly-body');
+  const badge=document.getElementById('weekly-badge');
+  const sect=document.getElementById('weekly-section');
+  if(tasks.length===0){
+    sect.style.display='none';
+    return;
+  }
+  sect.style.display='block';
+  let h='';
+  tasks.forEach(t=>{
+    h+=`<div class="check-item" id="check-${t.key}" onclick="toggleCheck(this,'${t.key}')">
+      <div class="check-box"><div class="check-box-inner">✓</div></div>
+      <div class="check-text"><div class="check-label">${t.name}</div><div class="check-sub">${t.sub}</div></div>
+    </div>`;
+  });
+  body.innerHTML=h;
+  badge.textContent='0/'+tasks.length;
+}
+
+// ── 全景刷新 ──
+function refreshMap(){
+  const s=localStorage.getItem('dashStartDate');if(!s)return;
+  const td=getTotalDay();
+  // biz stats
+  let bizDone=0;const weekDay=getWeekDay();
+  for(let i=0;i<7;i++){const d=new Date(new Date(s).getTime()+i*86400000).toISOString().slice(0,10);const r=JSON.parse(localStorage.getItem('dash_'+d)||'{}');if(r.bizDone||r.bizStar)bizDone++;}
+  document.getElementById('biz-stats').innerHTML=`
+    <div class="data-card pink"><div class="data-card-num">${td}<span>天</span></div><div class="data-card-label">总天数</div></div>
+    <div class="data-card"><div class="data-card-num">${weekNames[getWeekType()]}</div><div class="data-card-label">本周类型</div></div>
+    <div class="data-card"><div class="data-card-num">${bizDone}<span>/7</span></div><div class="data-card-label">本周完成</div></div>
+    <div class="data-card"><div class="data-card-num">${document.getElementById('streak-num').textContent}<span>天</span></div><div class="data-card-label">连续打卡</div></div>`;
+  document.getElementById('prog-biz').style.width=Math.round(bizDone/7*100)+'%';
+  document.getElementById('prog-biz-pct').textContent=Math.round(bizDone/7*100)+'%';
+  // body check-in count
+  let bodyDays=0;
+  for(let i=0;i<7;i++){const d=new Date(new Date(s).getTime()+i*86400000).toISOString().slice(0,10);const r=JSON.parse(localStorage.getItem('dash_'+d)||'{}');if(r.exerciseDone||r.leaveDone)bodyDays++;}
+  document.getElementById('prog-body').style.width=Math.round(bodyDays/7*100)+'%';
+  document.getElementById('prog-body-pct').textContent=bodyDays+'/7';
+  // flatfoot
+  let ff=0;for(let i=0;i<7;i++){const d=new Date(new Date(s).getTime()+i*86400000).toISOString().slice(0,10);const r=JSON.parse(localStorage.getItem('dash_'+d)||'{}');if(r.flatfootDone)ff++;}
+  document.getElementById('flatfoot-count').textContent=ff;
+}
+
+// ── 甘特图 ──
+const ganttRows=[
+  {label:'副业任务',key:'biz',cls:'done-biz'},
+  {label:'日记锚点',key:'diary',cls:'done-diary'},
+  {label:'身心打卡',key:'body',cls:'done-body'},
+  {label:'周任务',key:'weekly',cls:'done-weekly'},
+  {label:'暴食记录',key:'craving',cls:'done-craving'},
+  {label:'情绪标注',key:'mood',cls:'done-mood'},
+];
+function buildGantt(){
+  const s=localStorage.getItem('dashStartDate');
+  const currentDay=Math.min(28,Math.max(1,getTotalDay()));
+  const g=document.getElementById('gantt-main');
+  let h='<div class="gantt-header"><div class="gantt-row-label"></div><div class="gantt-days">';
+  for(let d=1;d<=28;d++){
+    h+=`<div class="gantt-day-head${d===currentDay?' today':''}">${d}</div>`;
+  }
+  h+='</div></div>';
+  ganttRows.forEach(r=>{
+    h+=`<div class="gantt-row"><div class="gantt-row-label">${r.label}</div><div class="gantt-cells">`;
+    for(let d=1;d<=28;d++){
+      const dateStr=s?new Date(new Date(s).getTime()+(d-1)*86400000).toISOString().slice(0,10):'';
+      let isDone=false;
+      if(dateStr){
+        const dayData=JSON.parse(localStorage.getItem('dash_'+dateStr)||'{}');
+        if(r.key==='biz')isDone=dayData.bizDone||dayData.bizStar;
+        else if(r.key==='diary')isDone=!!dayData.anchor;
+        else if(r.key==='body')isDone=dayData.exerciseDone||dayData.leaveDone;
+        else if(r.key==='weekly')isDone=dayData.flatfootDone||dayData.reviewDone;
+        else if(r.key==='craving')isDone=!!localStorage.getItem('cravings_'+dateStr);
+        else if(r.key==='mood')isDone=!!dayData.emotion;
+      }
+      const isFuture=d>currentDay;
+      let cls='gantt-cell';
+      if(isDone)cls+=' '+r.cls;
+      if(d===currentDay)cls+=' today-cell';
+      if(isFuture&&!isDone)cls+=' future';
+      h+=`<div class="${cls}" title="Day ${d}"></div>`;
+    }
+    h+='</div></div>';
+  });
+  g.innerHTML=h;
+}
+
+// ── 暴食模式 ──
+function refreshCravingPattern(){
+  // placeholder - same static display for now
+}
+
+// ── 设置联动 ──
+function changeWeekType(){
+  const sd=document.getElementById('settings-date');
+  if(sd)sd.value=localStorage.getItem('dashStartDate')||'';
 }
 
 // ── 初始化 ──
@@ -829,12 +750,11 @@ function init(){
   if(!start){
     document.getElementById('setup-overlay').classList.add('open');
     document.getElementById('setup-date').value=today();
-  } else {
+  }else{
     updateHeader();
+    buildWeeklySection();
     loadTodayData();
-    loadCaptures();
-    const sd=document.getElementById('settings-date');
-    if(sd)sd.value=start;
+    buildGantt();
   }
 }
 
