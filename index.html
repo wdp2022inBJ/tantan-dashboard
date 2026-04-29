@@ -424,6 +424,18 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
       <button style="width:100%;background:var(--pink-pale);border:1px solid var(--pink-border);border-radius:12px;padding:14px;font-family:var(--body);font-size:13px;color:var(--pink-dark);cursor:pointer;margin-top:8px" onclick="exportTodayAsMarkdown()">📄 导出今日日记（Markdown）</button>
     </div>
   </div>
+
+  <!-- 本周汇总 -->
+  <div class="section animate-in" style="animation-delay:.2s">
+    <div class="section-header">
+      <div class="section-title"><span>📊</span>本周汇总</div>
+      <div class="section-badge" id="week-range-label">—</div>
+    </div>
+    <div class="section-body">
+      <div id="weekly-report" style="font-size:12px;color:var(--gray);line-height:1.8">点击下方按钮生成汇总</div>
+      <button style="width:100%;background:var(--black);border:none;border-radius:12px;padding:12px;color:#fff;font-family:var(--body);font-size:12px;cursor:pointer;margin-top:10px" onclick="refreshWeeklyReport()">🔄 更新汇总</button>
+    </div>
+  </div>
   <div class="section animate-in" style="animation-delay:.25s">
     <div class="section-header"><div class="section-title"><span>☁️</span>云端同步</div></div>
     <div class="section-body">
@@ -568,7 +580,7 @@ function switchPage(id,btn){
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='map')refreshMap();
-  if(id==='craving')refreshCravingPattern();
+  if(id==='craving'){refreshCravingPattern();refreshWeeklyReport();}
 }
 
 // ── 副业动作 ──
@@ -766,6 +778,7 @@ function init(){
     buildWeeklySection();
     loadTodayData();
     buildGantt();
+    refreshWeeklyReport();
   }
 }
 
@@ -1001,6 +1014,56 @@ async function autoSyncDown(){
       showSyncStatus('ready');
     }
   }catch(e){showSyncStatus('offline');}
+}
+
+// 本周数据汇总
+function refreshWeeklyReport(){
+  const start=localStorage.getItem('dashStartDate');
+  if(!start){document.getElementById('weekly-report').textContent='请先设置启动日期';return;}
+  const st=new Date(start+'T00:00:00');
+  const today=new Date();today.setHours(0,0,0,0);
+  // 找到本周一
+  const dow=st.getDay()||7;
+  let weekStart=new Date(st);
+  while((weekStart-st)/(86400000)<7*(Math.floor((today-st)/86400000/7))){weekStart=new Date(st.getTime()+7*Math.floor((today-st)/86400000/7)*86400000);}
+  // 重新算本周一
+  const daysSince=(today-st)/86400000;
+  const weekIdx=Math.floor(daysSince/7);
+  weekStart=new Date(st.getTime()+weekIdx*7*86400000);
+  const weekEnd=new Date(weekStart.getTime()+6*86400000);
+  document.getElementById('week-range-label').textContent=
+    (weekStart.getMonth()+1)+'/'+weekStart.getDate()+' - '+(weekEnd.getMonth()+1)+'/'+weekEnd.getDate();
+  // 收集本周数据
+  let bizDone=0,bizStar=0,diaryDone=0,bodyDone=0,cravingLog=0,totalBiz=0;
+  for(const d of eachDay(weekStart,weekEnd)){
+    const key=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    const raw=localStorage.getItem('dash_'+key)||localStorage.getItem('dash_'+key.replace(/-(\d)\b/,'-0$1'));
+    if(!raw)continue;
+    try{
+      const j=JSON.parse(raw);
+      if(j.biz==='done'){bizDone++;totalBiz++;}
+      if(j.biz==='star'){bizStar++;totalBiz++;}
+      if(j.diary?.trim())diaryDone++;
+      if(j.body?.trim())bodyDone++;
+      const c=localStorage.getItem('cravings_'+key)||localStorage.getItem('cravings_'+key.replace(/-(\d)\b/,'-0$1'));
+      if(c&&JSON.parse(c).length>0)cravingLog++;
+    }catch(e){}
+  }
+  const bizRate=totalBiz>0?Math.round((bizDone+bizStar)/totalBiz*100):0;
+  const html='<b style="font-size:13px;color:var(--black2)">📅 '+totalBiz+'天中有'+(bizDone+bizStar)+'天完成主线任务</b><br>'+
+    '<span style="color:var(--pink-deep)">完成率 '+bizRate+'%</span>　'+
+    '<span style="color:var(--black2)">超额 '+bizStar+'次</span><br>'+
+    '<span style="color:var(--gray)">日记 '+diaryDone+'天　身心打卡 '+bodyDone+'天</span><br>'+
+    (cravingLog>0?'<span style="color:#D4826A">⚠️ 暴食冲动记录 '+cravingLog+'天</span>':'<span style="color:#8FBC8F">✨ 本周无暴食冲动</span>');
+  document.getElementById('weekly-report').innerHTML=html;
+}
+
+function eachDay(start,end){
+  const days=[];
+  const cur=new Date(start);cur.setHours(0,0,0,0);
+  const e=new Date(end);e.setHours(0,0,0,0);
+  while(cur<=e){days.push(new Date(cur));cur.setDate(cur.getDate()+1);}
+  return days;
 }
 
 init();
