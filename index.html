@@ -612,16 +612,6 @@ function selectWeekType(type){
   document.getElementById('wt-product').className=type==='product'?'active':'';
   document.getElementById('wt-content').className=type==='content'?'active':'';
 }
-function saveSetup(){
-  const d=document.getElementById('setup-date').value;
-  if(!d)return;
-  const wt=document.getElementById('wt-product').classList.contains('active')?'product':'content';
-  localStorage.setItem('dashStartDate',d);
-  localStorage.setItem('dashWeekType',wt);
-  document.getElementById('setup-overlay').classList.remove('open');
-  updateHeader();buildWeeklySection();loadTodayData();buildGantt();
-}
-
 // ── 更新头部 ──
 function updateHeader(){
   const wt=getWeekType();
@@ -751,6 +741,7 @@ function init(){
     document.getElementById('setup-overlay').classList.add('open');
     document.getElementById('setup-date').value=today();
   }else{
+    document.getElementById('setup-overlay').classList.remove('open');
     updateHeader();
     buildWeeklySection();
     loadTodayData();
@@ -758,7 +749,26 @@ function init(){
   }
 }
 
-init();
+// ── 保存设置（点"开始驾驶"时） ──
+function saveSetup(){
+  const d=document.getElementById('setup-date').value;
+  if(!d)return;
+  // 如果已有启动日期且不是今天，不要覆盖
+  const existing=localStorage.getItem('dashStartDate');
+  if(existing && existing!==d){
+    // 提示确认
+    if(!confirm(`检测到已有启动日期 ${existing}，是否改为 ${d}？（已存数据不会丢失）`)){
+      document.getElementById('setup-overlay').classList.remove('open');
+      updateHeader();buildWeeklySection();loadTodayData();buildGantt();
+      return;
+    }
+  }
+  const wt=document.getElementById('wt-product').classList.contains('active')?'product':'content';
+  localStorage.setItem('dashStartDate',d);
+  localStorage.setItem('dashWeekType',wt);
+  document.getElementById('setup-overlay').classList.remove('open');
+  updateHeader();buildWeeklySection();loadTodayData();buildGantt();
+}
 </script>
 </body>
 </html>
