@@ -415,6 +415,14 @@ body{background:var(--white);font-family:var(--body);color:var(--black);min-heig
       <textarea class="mini-input" id="input-journal" rows="4" placeholder="今天的情绪波动和想法，写下来…" oninput="autoSave()"></textarea>
     </div>
   </div>
+  <div class="section animate-in" style="animation-delay:.2s">
+    <div class="section-header"><div class="section-title"><span>📤</span>导出数据</div></div>
+    <div class="section-body">
+      <div class="tip-text">把手机上的打卡数据导出为文件，传到电脑端的 Obsidian 里查阅。</div>
+      <button style="width:100%;background:var(--black);border:none;border-radius:12px;padding:14px;color:#fff;font-family:var(--body);font-size:13px;cursor:pointer;margin-top:12px" onclick="exportAllData()">📤 导出全部数据</button>
+      <button style="width:100%;background:var(--pink-pale);border:1px solid var(--pink-border);border-radius:12px;padding:14px;font-family:var(--body);font-size:13px;color:var(--pink-dark);cursor:pointer;margin-top:8px" onclick="exportTodayAsMarkdown()">📄 导出今日日记（Markdown）</button>
+    </div>
+  </div>
 </div>
 
 <!-- Crash Modal -->
@@ -769,6 +777,61 @@ function saveSetup(){
   document.getElementById('setup-overlay').classList.remove('open');
   updateHeader();buildWeeklySection();loadTodayData();buildGantt();
 }
+
+// ── 导出全部数据（JSON） ──
+function exportAllData(){
+  const all={};
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+    if(key.startsWith('dash_')||key.startsWith('cravings_')||key.startsWith('journal_')){
+      all[key]=localStorage.getItem(key);
+    }
+  }
+  all.dashStartDate=localStorage.getItem('dashStartDate');
+  all.dashWeekType=localStorage.getItem('dashWeekType');
+  const blob=new Blob([JSON.stringify(all,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='碳碳驾驶舱数据_'+today()+'.json';
+  a.click();
+  showToast('数据已导出 ✓');
+}
+
+// ── 导出今日日记（Markdown） ──
+function exportTodayAsMarkdown(){
+  const d=JSON.parse(localStorage.getItem(todayKey())||'{}');
+  const cravings=JSON.parse(localStorage.getItem('cravings_'+today())||'[]');
+  const journal=document.getElementById('input-journal').value||'';
+  const emotionMap={'😊还好':'😊','😴疲惫':'😴','😤焦虑':'😤','⚡在线':'⚡','🔥超燃':'🔥'};
+  let md=`# 碳碳の每日记录 · ${today()}\n\n`;
+  md+=`## 🎯 今日任务\n- 状态：${d.bizDone?'✅ 已完成':d.bizStar?'⭐ 超额':'未完成'}\n\n`;
+  md+=`## 📝 锚点\n${d.anchor||'（未写）'}\n\n`;
+  md+=`## 🫀 身心打卡\n`;
+  md+=`- 饱腹度：午${d.hungerLunch||'-'} / 晚${d.hungerDinner||'-'}\n`;
+  md+=`- 剩一口：${d.leaveDone?'✅':'❌'}\n`;
+  md+=`- 运动：${d.exerciseDone?'✅':'❌'}\n`;
+  md+=`- 情绪：${d.emotion||'未选'}\n\n`;
+  if(cravings.length>0){
+    md+=`## 📦 暴食冲动记录\n`;
+    cravings.forEach((c,i)=>{
+      md+=`### 记录 ${i+1} · ${c.time}\n`;
+      md+=`- 情境：${c.context}\n`;
+      md+=`- 情绪：${c.emotions.join(' / ')||'未选'}\n`;
+      md+=`- 替代行动：${c.actions.join(' / ')||'未选'}\n\n`;
+    });
+  }
+  if(journal){
+    md+=`## 📝 情绪日记\n${journal}\n`;
+  }
+  const blob=new Blob([md],{type:'text/markdown'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='每日记录_'+today()+'.md';
+  a.click();
+  showToast('日记已导出 ✓');
+}
+
+init();
 </script>
 </body>
 </html>
